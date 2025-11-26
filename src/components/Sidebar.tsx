@@ -63,9 +63,9 @@ export default function Sidebar() {
       <motion.aside
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        className={`fixed left-0 top-0 h-screen w-20 lg:w-24 bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl border-r border-white/20 dark:border-gray-800/20 z-40 flex flex-col items-center py-8 shadow-2xl overflow-hidden ${
+        className={`fixed left-0 top-0 h-screen w-64 lg:w-24 bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl border-r border-white/20 dark:border-gray-800/20 z-40 flex flex-col items-center py-8 shadow-2xl overflow-hidden ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        } transition-transform duration-300`}
+        } transition-transform duration-300 ease-in-out`}
       >
         {/* Logo */}
         <motion.div
