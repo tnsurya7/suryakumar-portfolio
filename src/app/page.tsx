@@ -196,7 +196,7 @@ export default function HomePage() {
     }
   };
 
-  const categories = [...new Set(skills.map(s => s.category))];
+  const categories = [...new Set(skills.map(s => s.category))] as string[];
 
   return (
     <>
