@@ -3,16 +3,24 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+interface Skill {
+  _id?: string;
+  id?: string;
+  name: string;
+  category: string;
+  level: number;
+}
+
 export default function SkillsPage() {
-  const [skills, setSkills] = useState<any[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
     fetch('/api/skills')
       .then(res => res.json())
-      .then(data => {
+      .then((data: Skill[]) => {
         setSkills(data);
-        const uniqueCategories: string[] = Array.from(new Set(data.map((s: any) => s.category)));
+        const uniqueCategories = [...new Set(data.map((s) => String(s.category)))];
         setCategories(uniqueCategories);
       })
       .catch(console.error);
