@@ -20,7 +20,8 @@ export default function SkillsPage() {
       .then(res => res.json())
       .then((data: Skill[]) => {
         setSkills(data);
-        const uniqueCategories = [...new Set(data.map((s) => String(s.category)))];
+        const categoryStrings = data.map((s) => String(s.category));
+        const uniqueCategories = Array.from(new Set(categoryStrings));
         setCategories(uniqueCategories);
       })
       .catch(console.error);
