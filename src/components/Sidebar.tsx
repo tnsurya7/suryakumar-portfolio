@@ -50,19 +50,15 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile Menu Button */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="fixed top-6 left-6 z-50 lg:hidden p-3 rounded-2xl bg-white/10 dark:bg-gray-900/10 backdrop-blur-xl border border-white/20 shadow-xl"
+        className="fixed top-6 left-6 z-50 lg:hidden p-3 rounded-2xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border border-gray-300 dark:border-gray-700 shadow-xl hover:scale-110 transition-transform"
       >
         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </motion.button>
+      </button>
 
       {/* Sidebar */}
-      <motion.aside
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
+      <aside
         className={`fixed left-0 top-0 h-screen w-64 lg:w-24 bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl border-r border-white/20 dark:border-gray-800/20 z-40 flex flex-col items-center py-8 shadow-2xl overflow-hidden ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } transition-transform duration-300 ease-in-out`}
@@ -125,7 +121,7 @@ export default function Sidebar() {
             {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
           </motion.button>
         )}
-      </motion.aside>
+      </aside>
 
       {/* Mobile Overlay */}
       {mobileMenuOpen && (
