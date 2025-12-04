@@ -11,7 +11,7 @@ import {
 import toast from 'react-hot-toast';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
-import ViewCounter from '@/components/ViewCounter';
+import SuryaAI from '@/components/SuryaAI';
 
 export default function HomePage() {
   const [socialLinks, setSocialLinks] = useState<any[]>([]);
@@ -201,7 +201,7 @@ export default function HomePage() {
   return (
     <>
       <Sidebar />
-      <ViewCounter />
+      <SuryaAI />
       <div className="ml-0 lg:ml-24">
         {/* Hero Section */}
         <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8">
@@ -305,7 +305,7 @@ export default function HomePage() {
               <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">My journey, education, and achievements</p>
             </motion.div>
 
-            <div className="mb-20">
+            <div id="education" className="mb-20">
               <motion.h3 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -385,7 +385,7 @@ export default function HomePage() {
             </div>
 
             {internships.length > 0 && (
-              <div className="mb-20">
+              <div id="internships" className="mb-20">
                 <motion.h3 
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -474,7 +474,7 @@ export default function HomePage() {
             )}
 
             {certificates.length > 0 && (
-              <div>
+              <div id="certificates">
                 <motion.h3 
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -586,8 +586,10 @@ export default function HomePage() {
                 };
                 const colors = categoryColors[category] || categoryColors['Web Development'];
                 
+                const categoryId = category.toLowerCase().replace(/\s+/g, '-');
+                
                 return (
-                  <motion.section key={category} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: catIndex * 0.1 }}>
+                  <motion.section key={category} id={categoryId} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: catIndex * 0.1 }}>
                     <h3 className="text-3xl font-bold mb-8 flex items-center gap-4">
                       <div className={`p-4 bg-gradient-to-br ${colors.icon} rounded-2xl text-white shadow-lg`}>
                         <Code size={32} />
