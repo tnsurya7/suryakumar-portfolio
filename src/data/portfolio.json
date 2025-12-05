@@ -189,6 +189,66 @@
       "name": "TypeScript",
       "category": "Web Development",
       "level": 55
+    },
+    {
+      "id": "25",
+      "name": "Kiro AI",
+      "category": "AI Tools",
+      "level": 100
+    },
+    {
+      "id": "26",
+      "name": "Blackbox AI",
+      "category": "AI Tools",
+      "level": 90
+    },
+    {
+      "id": "27",
+      "name": "GitHub Copilot",
+      "category": "AI Tools",
+      "level": 80
+    },
+    {
+      "id": "28",
+      "name": "Linux",
+      "category": "Operating Systems",
+      "level": 100
+    },
+    {
+      "id": "29",
+      "name": "Supabase",
+      "category": "Hosting Platforms",
+      "level": 100
+    },
+    {
+      "id": "30",
+      "name": "Firebase",
+      "category": "Hosting Platforms",
+      "level": 100
+    },
+    {
+      "id": "31",
+      "name": "Railway",
+      "category": "Hosting Platforms",
+      "level": 100
+    },
+    {
+      "id": "32",
+      "name": "PostgreSQL",
+      "category": "Database Management",
+      "level": 80
+    },
+    {
+      "id": "33",
+      "name": "REST API",
+      "category": "Web Development",
+      "level": 80
+    },
+    {
+      "id": "34",
+      "name": "Next.js",
+      "category": "Web Development",
+      "level": 70
     }
   ],
   "education": [
@@ -380,6 +440,85 @@
       "image": "/smart-agriculture.png",
       "images": [],
       "githubUrl": "https://github.com/tnsurya7/smart-irrigation-arimax",
+      "liveUrl": "",
+      "featured": true
+    },
+    {
+      "id": "6",
+      "title": "API Trichy Chapter - Official Website",
+      "description": "Complete digital platform for API Tiruchirappalli Chapter physicians",
+      "longDescription": "Proud to launch the official full-stack website for API Tiruchirappalli Chapter - a modern, elegant, information-rich hub for doctors with events, CME programs, publications, leadership details, media content, and member engagement features. Built with Next.js 14, TypeScript, PostgreSQL, and Prisma ORM.",
+      "technologies": ["Next.js 14", "TypeScript", "Tailwind CSS", "ShadCN UI", "Framer Motion", "Node.js", "Express.js", "PostgreSQL", "Prisma ORM", "JWT", "Swagger", "Vercel"],
+      "features": [
+        "Premium UI with custom API Trichy branding",
+        "Hero section with medical-themed imagery",
+        "Mobile-first responsive design",
+        "Smooth animations with Framer Motion",
+        "Navy-blue, orange & purple gradient theme",
+        "Glassmorphism panels",
+        "Home with hero, quick links, upcoming events",
+        "About Us - Chapter history and mission",
+        "Events / CME programs management",
+        "Leadership - Executive committee profiles",
+        "Membership details & application flow",
+        "Gallery - Event photos",
+        "Contact form with chapter info",
+        "Why Join API - Membership benefits",
+        "Auto-scrolling news ticker",
+        "Spotlight / featured cards",
+        "Publications - Journals & papers",
+        "Podcasts - Medical audio content",
+        "API TV - Recorded lectures & videos",
+        "Clinical Learning resources",
+        "Admin Panel with role-based access",
+        "Event management system",
+        "Gallery management",
+        "Member management",
+        "Content management (news, publications, podcasts)",
+        "Contact submissions management"
+      ],
+      "challenges": "Building a comprehensive CMS with role-based access control, managing multiple content types (events, publications, media), and creating an elegant medical-themed UI that appeals to physicians.",
+      "image": "/api-trichy.png",
+      "images": [],
+      "githubUrl": "https://github.com/tnsurya7/api-trichy",
+      "liveUrl": "https://api-trichy.vercel.app/",
+      "featured": true
+    },
+    {
+      "id": "7",
+      "title": "ISC Textile Report App - Digital Printing Management",
+      "description": "Digital textile printing & production management system for Indian Soft Colours",
+      "longDescription": "Built for client Indian Soft Colours (ISC) - Mr. P. Baskaran. A fully digital textile printing & production management system that replaces manual registers with real-time tracking, reporting, analytics, and export capabilities. Optimized for mobile, tablet, and desktop with PWA support for offline access.",
+      "technologies": ["Next.js 13+", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "jsPDF", "AutoTable", "SheetJS (XLSX)", "Next-PWA", "Vercel"],
+      "features": [
+        "Smart Record Management - Add, Edit, Delete with confirmation",
+        "Search, sort & filter by date ranges (Today, Week, Month, Custom)",
+        "Bulk selection for exports",
+        "Detailed data fields: Date, Party DC No, Padding DC No, Party Name, Fabric Quality, Party Mtr, Padding Mtr, Short/Excess Mtr, Print Mtr, Outward Mtr, Balance",
+        "Dashboard & Analytics with total records, meters, and live metrics",
+        "Color-coded metrics and recent activity feed",
+        "PDF Export with auto-formatted tables, company logo, portrait/landscape modes, page numbering",
+        "Excel Export with clean spreadsheets compatible with MS Excel & Google Sheets",
+        "Export selected or all records",
+        "PWA - Installable on Android, iPhone, Windows, macOS",
+        "Offline support with Add-to-Home-Screen prompt",
+        "Full-screen app-like UI",
+        "Mobile-first responsive design",
+        "Tablet optimized interface",
+        "Desktop dashboard view",
+        "Touch-friendly controls",
+        "Real-time database operations",
+        "Dynamic editing pages",
+        "Database field mapper",
+        "Custom dashboard widgets",
+        "Toast notifications",
+        "Loading states",
+        "Secure environment variables"
+      ],
+      "challenges": "Transforming paper-based textile workflow into a digital system, implementing complex PDF/Excel export with custom formatting, ensuring offline functionality with PWA, and creating an intuitive UI for non-technical textile workers.",
+      "image": "/isc.png",
+      "images": [],
+      "githubUrl": "https://github.com/tnsurya7/isc-textile-app",
       "liveUrl": "",
       "featured": true
     }

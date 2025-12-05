@@ -15,11 +15,12 @@ const knowledge = {
     portfolio: 'https://suryakumar-portfolio-chi.vercel.app/',
   },
   skills: {
-    frontend: ['Next.js 14', 'React 18', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion', 'HTML5', 'CSS3', 'JavaScript ES6+'],
+    frontend: ['Next.js 14', 'Next.js', 'React 18', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion', 'HTML5', 'CSS3', 'JavaScript ES6+'],
     backend: ['Node.js', 'Express.js', 'REST APIs', 'FastAPI'],
     database: ['MySQL', 'PostgreSQL', 'MongoDB', 'Prisma ORM'],
-    ai: ['OpenAI API', 'RAG', 'MCP Server', 'AI Agents', 'n8n automation', 'ARIMAX model'],
-    deployment: ['Vercel', 'Render', 'Railway', 'Netlify', 'MongoDB Atlas', 'Aiven'],
+    ai: ['ChatGPT', 'Google Studio AI', 'Perplexity AI', 'Kiro AI', 'Blackbox AI', 'GitHub Copilot', 'OpenAI API', 'RAG', 'MCP Server', 'AI Agents', 'n8n automation', 'ARIMAX model'],
+    deployment: ['Vercel', 'Render', 'Railway', 'Netlify', 'Supabase', 'Firebase', 'MongoDB Atlas', 'Aiven'],
+    os: ['macOS', 'Windows', 'Linux'],
     other: ['Zustand', 'Multer', 'jsPDF', 'JWT', 'Nodemailer', 'Cloudinary', 'Git', 'GitHub'],
   },
   projects: {
@@ -42,10 +43,10 @@ const knowledge = {
       features: ['Patient records', 'Vitals tracking', 'PDF export', 'Search features', 'Appointment management'],
     },
     apiTrichy: {
-      name: 'API Tiruchirappalli Medical Association Website',
+      name: 'API Tiruchirappalli Chapter - Official Website',
       live: 'https://api-trichy.vercel.app/',
-      tech: ['Next.js', 'PostgreSQL', 'Prisma ORM', 'TypeScript'],
-      features: ['Events management', 'Photo gallery', 'Leadership profiles', 'Publications', 'CMS admin panel'],
+      tech: ['Next.js 14', 'TypeScript', 'PostgreSQL', 'Prisma ORM', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion'],
+      features: ['Events/CME management', 'Photo gallery', 'Leadership profiles', 'Publications', 'Podcasts', 'API TV', 'Clinical Learning', 'CMS admin panel', 'Role-based access', 'Member management', 'News ticker', 'Contact form'],
     },
     aiReminder: {
       name: 'AI Auto Reminder System',
@@ -62,11 +63,11 @@ const knowledge = {
       note: 'Can explain architecture, APIs, and database design.',
     },
     iscPrinting: {
-      name: 'ISC Digital Printing / Textile Report App',
+      name: 'ISC Textile Report App - Digital Printing Management',
       live: null,
-      tech: ['React', 'Node.js', 'Express.js', 'MongoDB'],
-      features: ['Report generation', 'Print job management'],
-      note: 'Internal client project.',
+      tech: ['Next.js 13+', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'jsPDF', 'SheetJS', 'Next-PWA'],
+      features: ['Smart record management', 'Dashboard & analytics', 'PDF/Excel export', 'PWA installable app', 'Offline support', 'Real-time tracking', 'Date range filters', 'Bulk operations', 'Mobile-first design'],
+      note: 'Built for Indian Soft Colours (ISC) - Mr. P. Baskaran. Replaces manual textile printing registers with digital system.',
     },
   },
   education: {
@@ -138,28 +139,28 @@ function generateResponse(message: string): string {
   }
 
   // Web Development
-  if (lowerMessage.match(/(web|website|webdev|web dev|web development|frontend|front end|front-end|frntend|backend|back end|back-end|bckend|fullstack|full stack|html|css|javascript|js|ecmascript|react|reactjs|react js|rct|node|nodejs|node js|nde|express|expressjs|express js|xpress|fastapi|fast api|jwt|json web token|typescript|ts|typscript)/)) {
-    return `Summary: Surya's Web Development Skills.\n\nDetails:\nHTML, CSS, JavaScript, React.js, Node.js, Express.js, FastAPI, JWT, TypeScript\n\nNext step: Want to see database or AI skills?\n\nscrollToSection("web-development");`;
+  if (lowerMessage.match(/(web|website|webdev|web dev|web development|frontend|front end|front-end|frntend|backend|back end|back-end|bckend|fullstack|full stack|html|css|javascript|js|ecmascript|react|reactjs|react js|rct|node|nodejs|node js|nde|express|expressjs|express js|xpress|fastapi|fast api|jwt|json web token|typescript|ts|typscript|next|nextjs|next js|rest api|restapi|api)/)) {
+    return `Summary: Surya's Web Development Skills.\n\nDetails:\n• HTML (95%)\n• CSS (90%)\n• JavaScript (90%)\n• React.js (88%)\n• Node.js (85%)\n• Express.js (85%)\n• REST API (80%)\n• FastAPI (75%)\n• Next.js (70%)\n• TypeScript (55%)\n\nNext step: Want to see database or AI skills?\n\nscrollToSection("web-development");`;
   }
 
   // Database Management
-  if (lowerMessage.match(/(database|databases|databse|databas|databes|^db$|^dbs$|sql|nosql|no sql|mysql|my sql|mysq|mongo|mongodb|mongo db|mongdb|prisma|orm|data storage|storage|query|queries|dbms)/)) {
-    return `Summary: Surya's Database Skills.\n\nDetails:\n• MySQL\n• MongoDB\n\nNext step: Want to see hosting platforms or other skills?\n\nscrollToSection("database-management");`;
+  if (lowerMessage.match(/(database|databases|databse|databas|databes|^db$|^dbs$|sql|nosql|no sql|mysql|my sql|mysq|mongo|mongodb|mongo db|mongdb|postgres|postgresql|postgre|prisma|orm|data storage|storage|query|queries|dbms)/)) {
+    return `Summary: Surya's Database Skills.\n\nDetails:\n• MySQL (90%)\n• MongoDB (80%)\n• PostgreSQL (80%)\n\nNext step: Want to see hosting platforms or other skills?\n\nscrollToSection("database-management");`;
   }
 
   // Hosting Platforms
-  if (lowerMessage.match(/(hosting|host|hsting|deployment|deploy|deploying|dploy|cloud|cld|server|servers|vercel|vercl|verc|^ver$|netlify|netfly|ntlfy|^ntl$|^netl$|render|rendr|rndr|rnder|aiven|railway|atlas|mongodb atlas|platform|platforms)/)) {
-    return `Summary: Surya's Hosting & Deployment Platforms.\n\nDetails:\nMongoDB Atlas, Netlify, Vercel, Render, Aiven\n\nNext step: Want to see programming languages or AI tools?\n\nscrollToSection("hosting-platforms");`;
+  if (lowerMessage.match(/(hosting|host|hsting|deployment|deploy|deploying|dploy|cloud|cld|server|servers|vercel|vercl|verc|^ver$|netlify|netfly|ntlfy|^ntl$|^netl$|render|rendr|rndr|rnder|aiven|railway|railwy|supabase|supabse|firebase|firebs|atlas|mongodb atlas|platform|platforms)/)) {
+    return `Summary: Surya's Hosting & Deployment Platforms.\n\nDetails:\n• Vercel (100%)\n• Netlify (100%)\n• Render (100%)\n• Railway (100%)\n• Supabase (100%)\n• Firebase (100%)\n• MongoDB Atlas (100%)\n• Aiven (100%)\n\nNext step: Want to see programming languages or AI tools?\n\nscrollToSection("hosting-platforms");`;
   }
 
   // Operating Systems
-  if (lowerMessage.match(/(operating system|operating systems|^os$|^opsys$|^sys$|system|systems|mac|macos|mac os|macbook|apple|windows|win|windows os|microsoft|linux|unix)/)) {
-    return `Summary: Surya's Operating System Skills.\n\nDetails:\n• macOS (100%)\n• Windows (100%)\n\nNext step: Want to see other technical skills?\n\nscrollToSection("operating-systems");`;
+  if (lowerMessage.match(/(operating system|operating systems|^os$|^opsys$|^sys$|system|systems|mac|macos|mac os|macbook|apple|windows|win|windows os|microsoft|linux|unix|ubuntu|debian)/)) {
+    return `Summary: Surya's Operating System Skills.\n\nDetails:\n• macOS (100%)\n• Windows (100%)\n• Linux (100%)\n\nNext step: Want to see other technical skills?\n\nscrollToSection("operating-systems");`;
   }
 
   // AI Tools
-  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|gemini|perplexity|perplex|perp|llm|large language|neural|deep learning)/)) {
-    return `Summary: Surya's AI Tools Expertise.\n\nDetails:\n• ChatGPT\n• Google Studio AI\n• Perplexity AI\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-tools");`;
+  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|gemini|perplexity|perplex|perp|kiro|kiro ai|blackbox|blackbox ai|copilot|github copilot|llm|large language|neural|deep learning)/)) {
+    return `Summary: Surya's AI Tools Expertise.\n\nDetails:\n• ChatGPT (100%)\n• Google Studio AI (100%)\n• Kiro AI (100%)\n• Blackbox AI (90%)\n• Perplexity AI (85%)\n• GitHub Copilot (80%)\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-tools");`;
   }
 
   // Skills Section (general - all skills)
@@ -169,7 +170,7 @@ function generateResponse(message: string): string {
 
   // Projects Section (navigation)
   if (lowerMessage.match(/(^project$|^projects$|^proj$|^pro$|^prj$|^prjt$|^apps$|^appz$|^applications$|portfolio projects|^websites$|^wrk$|^wrklist$|show projects|my work|real work|view projects|projects section)/)) {
-    return `Summary: These are Surya's real-world projects.\n\nDetails: 7+ production applications including bilingual platforms, healthcare systems, and AI automation.\n\nNext step: Choose any project if you want a deep explanation.\n\nscrollToSection("projects");`;
+    return `Summary: These are Surya's real-world projects.\n\nDetails: 8+ production applications including bilingual platforms, healthcare systems, AI automation, medical association website, and textile management system.\n\nNext step: Choose any project if you want a deep explanation.\n\nscrollToSection("projects");`;
   }
 
 
@@ -187,6 +188,7 @@ function generateResponse(message: string): string {
       `Database → ${knowledge.skills.database.join(', ')}\n\n` +
       `AI Tools → ${knowledge.skills.ai.join(', ')}\n\n` +
       `Deployment → ${knowledge.skills.deployment.join(', ')}\n\n` +
+      `Operating Systems → ${knowledge.skills.os.join(', ')}\n\n` +
       `Other → ${knowledge.skills.other.join(', ')}\n\n` +
       `Surya is a full-stack developer with strong AI/ML capabilities!`;
   }
@@ -274,11 +276,12 @@ function generateResponse(message: string): string {
       `1. Portfolio Website - ${knowledge.socialLinks.portfolio}\n` +
       `2. Online Petition Portal - ${knowledge.projects.petition.live}\n` +
       `3. Hospital Management System - ${knowledge.projects.hospital.live}\n` +
-      `4. API Trichy Medical Website - ${knowledge.projects.apiTrichy.live}\n\n` +
-      `Architecture Projects: 🔧\n` +
-      `5. AI Auto Reminder - n8n automation (no public link)\n` +
-      `6. User Management - Full-stack CRUD (no public link)\n` +
-      `7. ISC Digital Printing - Internal client (no public link)\n\n` +
+      `4. API Trichy Chapter Website - ${knowledge.projects.apiTrichy.live}\n\n` +
+      `Production Projects: 🔧\n` +
+      `5. AI Auto WhatsApp Reminder - AI-powered automation\n` +
+      `6. Smart Irrigation System - ARIMAX ML model\n` +
+      `7. User Management System - Full-stack CRUD\n` +
+      `8. ISC Textile Report App - Digital printing management (Client: Indian Soft Colours)\n\n` +
       `Ask about any specific project for details!`;
   }
 

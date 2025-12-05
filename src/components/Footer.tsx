@@ -14,7 +14,10 @@ export default function Footer() {
           className="text-center"
         >
           <p className="text-gray-600 dark:text-gray-400">
-            © 2025. All Rights Reserved. Developed by SURYA KUMAR M
+            © 2025. All Rights Reserved. Developed by{' '}
+            <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 bg-clip-text text-transparent font-bold">
+              SURYA KUMAR M
+            </span>
           </p>
         </motion.div>
       </div>
