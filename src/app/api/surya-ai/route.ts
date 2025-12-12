@@ -16,12 +16,12 @@ const knowledge = {
   },
   skills: {
     frontend: ['Next.js 14', 'Next.js', 'React 18', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion', 'HTML5', 'CSS3', 'JavaScript ES6+'],
-    backend: ['Node.js', 'Express.js', 'REST APIs', 'FastAPI'],
+    backend: ['Node.js', 'Express.js', 'REST APIs', 'FastAPI', 'Nodemailer'],
     database: ['MySQL', 'PostgreSQL', 'MongoDB', 'Prisma ORM'],
-    ai: ['ChatGPT', 'Google Studio AI', 'Perplexity AI', 'Kiro AI', 'Blackbox AI', 'GitHub Copilot', 'OpenAI API', 'RAG', 'MCP Server', 'AI Agents', 'n8n automation', 'ARIMAX model'],
-    deployment: ['Vercel', 'Render', 'Railway', 'Netlify', 'Supabase', 'Firebase', 'MongoDB Atlas', 'Aiven'],
+    ai: ['ChatGPT', 'Google Studio AI', 'Google Anti Gravity', 'DeepSeek AI', 'Claude AI', 'Perplexity AI', 'Kiro AI', 'Blackbox AI', 'GitHub Copilot', 'AI Agents', 'N8N Automation', 'OpenAI API', 'RAG', 'MCP Server', 'ARIMAX model'],
+    deployment: ['Vercel', 'Render', 'Railway', 'Netlify', 'Supabase', 'Firebase', 'MongoDB Atlas', 'Aiven', 'GitHub & CI/CD'],
     os: ['macOS', 'Windows', 'Linux'],
-    other: ['Zustand', 'Multer', 'jsPDF', 'JWT', 'Nodemailer', 'Cloudinary', 'Git', 'GitHub'],
+    other: ['Zustand', 'Multer', 'jsPDF', 'JWT', 'Cloudinary', 'Git'],
   },
   projects: {
     portfolio: {
@@ -145,8 +145,8 @@ function generateResponse(message: string): string {
   }
 
   // Web Development
-  if (lowerMessage.match(/(web|website|webdev|web dev|web development|frontend|front end|front-end|frntend|backend|back end|back-end|bckend|fullstack|full stack|html|css|javascript|js|ecmascript|react|reactjs|react js|rct|node|nodejs|node js|nde|express|expressjs|express js|xpress|fastapi|fast api|jwt|json web token|typescript|ts|typscript|next|nextjs|next js|rest api|restapi|api)/)) {
-    return `Summary: Surya's Web Development Skills.\n\nDetails:\n• HTML (95%)\n• CSS (90%)\n• JavaScript (90%)\n• React.js (88%)\n• Node.js (85%)\n• Express.js (85%)\n• REST API (80%)\n• FastAPI (75%)\n• Next.js (70%)\n• TypeScript (55%)\n\nNext step: Want to see database or AI skills?\n\nscrollToSection("web-development");`;
+  if (lowerMessage.match(/(web|website|webdev|web dev|web development|frontend|front end|front-end|frntend|backend|back end|back-end|bckend|fullstack|full stack|html|css|javascript|js|ecmascript|react|reactjs|react js|rct|node|nodejs|node js|nde|express|expressjs|express js|xpress|fastapi|fast api|jwt|json web token|typescript|ts|typscript|next|nextjs|next js|rest api|restapi|api|nodemailer|nodemail|email)/)) {
+    return `Summary: Surya's Web Development Skills.\n\nDetails:\n• Nodemailer (100%)\n• HTML (95%)\n• CSS (90%)\n• JavaScript (90%)\n• React.js (88%)\n• Node.js (85%)\n• Express.js (85%)\n• REST API (80%)\n• FastAPI (75%)\n• Next.js (70%)\n• TypeScript (55%)\n\nNext step: Want to see database or AI skills?\n\nscrollToSection("web-development");`;
   }
 
   // Database Management
@@ -155,8 +155,8 @@ function generateResponse(message: string): string {
   }
 
   // Hosting Platforms
-  if (lowerMessage.match(/(hosting|host|hsting|deployment|deploy|deploying|dploy|cloud|cld|server|servers|vercel|vercl|verc|^ver$|netlify|netfly|ntlfy|^ntl$|^netl$|render|rendr|rndr|rnder|aiven|railway|railwy|supabase|supabse|firebase|firebs|atlas|mongodb atlas|platform|platforms)/)) {
-    return `Summary: Surya's Hosting & Deployment Platforms.\n\nDetails:\n• Vercel (100%)\n• Netlify (100%)\n• Render (100%)\n• Railway (100%)\n• Supabase (100%)\n• Firebase (100%)\n• MongoDB Atlas (100%)\n• Aiven (100%)\n\nNext step: Want to see programming languages or AI tools?\n\nscrollToSection("hosting-platforms");`;
+  if (lowerMessage.match(/(hosting|host|hsting|deployment|deploy|deploying|dploy|cloud|cld|server|servers|vercel|vercl|verc|^ver$|netlify|netfly|ntlfy|^ntl$|^netl$|render|rendr|rndr|rnder|aiven|railway|railwy|supabase|supabse|firebase|firebs|atlas|mongodb atlas|github|git|ci\/cd|cicd|continuous integration|continuous deployment|platform|platforms)/)) {
+    return `Summary: Surya's Hosting & Deployment Platforms.\n\nDetails:\n• Vercel (100%)\n• Netlify (100%)\n• Render (100%)\n• Railway (100%)\n• Supabase (100%)\n• Firebase (100%)\n• MongoDB Atlas (100%)\n• Aiven (100%)\n• GitHub & CI/CD (100%)\n\nNext step: Want to see programming languages or AI tools?\n\nscrollToSection("hosting-platforms");`;
   }
 
   // Operating Systems
@@ -164,9 +164,9 @@ function generateResponse(message: string): string {
     return `Summary: Surya's Operating System Skills.\n\nDetails:\n• macOS (100%)\n• Windows (100%)\n• Linux (100%)\n\nNext step: Want to see other technical skills?\n\nscrollToSection("operating-systems");`;
   }
 
-  // AI Tools
-  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|gemini|perplexity|perplex|perp|kiro|kiro ai|blackbox|blackbox ai|copilot|github copilot|llm|large language|neural|deep learning)/)) {
-    return `Summary: Surya's AI Tools Expertise.\n\nDetails:\n• ChatGPT (100%)\n• Google Studio AI (100%)\n• Kiro AI (100%)\n• Blackbox AI (90%)\n• Perplexity AI (85%)\n• GitHub Copilot (80%)\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-tools");`;
+  // AI Integrations & Automations
+  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|ai integrations|ai automations|automations|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|google anti gravity|anti gravity|deepseek|deepseek ai|claude|claude ai|gemini|perplexity|perplex|perp|kiro|kiro ai|blackbox|blackbox ai|copilot|github copilot|ai agents|agents|n8n|n8n automation|workflow|llm|large language|neural|deep learning)/)) {
+    return `Summary: Surya's AI Integrations & Automations Expertise.\n\nDetails:\n• ChatGPT (100%)\n• Google Studio AI (100%)\n• Google Anti Gravity (100%)\n• DeepSeek AI (100%)\n• Claude AI (100%)\n• Kiro AI (100%)\n• AI Agents (100%)\n• N8N Automation (100%)\n• Blackbox AI (90%)\n• Perplexity AI (85%)\n• GitHub Copilot (80%)\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-integrations-&-automations");`;
   }
 
   // Skills Section (general - all skills)
@@ -192,7 +192,7 @@ function generateResponse(message: string): string {
       `Frontend → ${knowledge.skills.frontend.join(', ')}\n\n` +
       `Backend → ${knowledge.skills.backend.join(', ')}\n\n` +
       `Database → ${knowledge.skills.database.join(', ')}\n\n` +
-      `AI Tools → ${knowledge.skills.ai.join(', ')}\n\n` +
+      `AI Integrations & Automations → ${knowledge.skills.ai.join(', ')}\n\n` +
       `Deployment → ${knowledge.skills.deployment.join(', ')}\n\n` +
       `Operating Systems → ${knowledge.skills.os.join(', ')}\n\n` +
       `Other → ${knowledge.skills.other.join(', ')}\n\n` +

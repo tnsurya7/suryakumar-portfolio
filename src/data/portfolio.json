@@ -169,19 +169,19 @@
     {
       "id": "21",
       "name": "ChatGPT",
-      "category": "AI Tools",
+      "category": "AI Integrations & Automations",
       "level": 100
     },
     {
       "id": "22",
       "name": "Google Studio AI",
-      "category": "AI Tools",
+      "category": "AI Integrations & Automations",
       "level": 100
     },
     {
       "id": "23",
       "name": "Perplexity AI",
-      "category": "AI Tools",
+      "category": "AI Integrations & Automations",
       "level": 85
     },
     {
@@ -193,19 +193,19 @@
     {
       "id": "25",
       "name": "Kiro AI",
-      "category": "AI Tools",
+      "category": "AI Integrations & Automations",
       "level": 100
     },
     {
       "id": "26",
       "name": "Blackbox AI",
-      "category": "AI Tools",
+      "category": "AI Integrations & Automations",
       "level": 90
     },
     {
       "id": "27",
       "name": "GitHub Copilot",
-      "category": "AI Tools",
+      "category": "AI Integrations & Automations",
       "level": 80
     },
     {
@@ -249,6 +249,48 @@
       "name": "Next.js",
       "category": "Web Development",
       "level": 70
+    },
+    {
+      "id": "35",
+      "name": "Nodemailer",
+      "category": "Web Development",
+      "level": 100
+    },
+    {
+      "id": "36",
+      "name": "Google Anti Gravity",
+      "category": "AI Integrations & Automations",
+      "level": 100
+    },
+    {
+      "id": "37",
+      "name": "DeepSeek AI",
+      "category": "AI Integrations & Automations",
+      "level": 100
+    },
+    {
+      "id": "38",
+      "name": "Claude AI",
+      "category": "AI Integrations & Automations",
+      "level": 100
+    },
+    {
+      "id": "39",
+      "name": "AI Agents",
+      "category": "AI Integrations & Automations",
+      "level": 100
+    },
+    {
+      "id": "40",
+      "name": "N8N Automation",
+      "category": "AI Integrations & Automations",
+      "level": 100
+    },
+    {
+      "id": "41",
+      "name": "GitHub & CI/CD",
+      "category": "Hosting Platforms",
+      "level": 100
     }
   ],
   "education": [
