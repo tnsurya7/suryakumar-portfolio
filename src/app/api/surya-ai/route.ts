@@ -18,7 +18,7 @@ const knowledge = {
     frontend: ['Next.js 14', 'Next.js', 'React 18', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion', 'HTML5', 'CSS3', 'JavaScript ES6+'],
     backend: ['Node.js', 'Express.js', 'REST APIs', 'FastAPI', 'Nodemailer'],
     database: ['MySQL', 'PostgreSQL', 'MongoDB', 'Prisma ORM'],
-    ai: ['ChatGPT', 'Google Studio AI', 'Google Anti Gravity', 'DeepSeek AI', 'Claude AI', 'Perplexity AI', 'Kiro AI', 'Blackbox AI', 'GitHub Copilot', 'AI Agents', 'N8N Automation', 'OpenAI API', 'RAG', 'MCP Server', 'ARIMAX model'],
+    ai: ['ChatGPT', 'Google Studio AI', 'Google Anti Gravity', 'DeepSeek AI', 'Claude AI', 'Lovable AI', 'Perplexity AI', 'Kiro AI', 'Blackbox AI', 'GitHub Copilot', 'AI Agents', 'N8N Automation', 'OpenAI API', 'RAG', 'MCP Server', 'ARIMAX model'],
     deployment: ['Vercel', 'Render', 'Railway', 'Netlify', 'Supabase', 'Firebase', 'MongoDB Atlas', 'Aiven', 'GitHub & CI/CD'],
     os: ['macOS', 'Windows', 'Linux'],
     other: ['Zustand', 'Multer', 'jsPDF', 'JWT', 'Cloudinary', 'Git'],
@@ -165,8 +165,8 @@ function generateResponse(message: string): string {
   }
 
   // AI Integrations & Automations
-  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|ai integrations|ai automations|automations|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|google anti gravity|anti gravity|deepseek|deepseek ai|claude|claude ai|gemini|perplexity|perplex|perp|kiro|kiro ai|blackbox|blackbox ai|copilot|github copilot|ai agents|agents|n8n|n8n automation|workflow|llm|large language|neural|deep learning)/)) {
-    return `Summary: Surya's AI Integrations & Automations Expertise.\n\nDetails:\n• ChatGPT (100%)\n• Google Studio AI (100%)\n• Google Anti Gravity (100%)\n• DeepSeek AI (100%)\n• Claude AI (100%)\n• Kiro AI (100%)\n• AI Agents (100%)\n• N8N Automation (100%)\n• Blackbox AI (90%)\n• Perplexity AI (85%)\n• GitHub Copilot (80%)\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-integrations-&-automations");`;
+  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|ai integrations|ai automations|automations|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|google anti gravity|anti gravity|deepseek|deepseek ai|claude|claude ai|lovable|lovable ai|gemini|perplexity|perplex|perp|kiro|kiro ai|blackbox|blackbox ai|copilot|github copilot|ai agents|agents|n8n|n8n automation|workflow|llm|large language|neural|deep learning)/)) {
+    return `Summary: Surya's AI Integrations & Automations Expertise.\n\nDetails:\n• ChatGPT (100%)\n• Google Studio AI (100%)\n• Google Anti Gravity (100%)\n• DeepSeek AI (100%)\n• Claude AI (100%)\n• Lovable AI (100%)\n• Kiro AI (100%)\n• AI Agents (100%)\n• N8N Automation (100%)\n• Blackbox AI (90%)\n• Perplexity AI (85%)\n• GitHub Copilot (80%)\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-integrations-&-automations");`;
   }
 
   // Skills Section (general - all skills)

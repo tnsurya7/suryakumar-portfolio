@@ -291,6 +291,12 @@
       "name": "GitHub & CI/CD",
       "category": "Hosting Platforms",
       "level": 100
+    },
+    {
+      "id": "42",
+      "name": "Lovable AI",
+      "category": "AI Integrations & Automations",
+      "level": 100
     }
   ],
   "education": [
