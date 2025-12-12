@@ -69,6 +69,12 @@ const knowledge = {
       features: ['Smart record management', 'Dashboard & analytics', 'PDF/Excel export', 'PWA installable app', 'Offline support', 'Real-time tracking', 'Date range filters', 'Bulk operations', 'Mobile-first design'],
       note: 'Built for Indian Soft Colours (ISC) - Mr. P. Baskaran. Replaces manual textile printing registers with digital system.',
     },
+    medFoxRCM: {
+      name: 'MedFoxRCM - Healthcare Revenue Cycle Management Platform',
+      live: 'https://medfoxrcm.com',
+      tech: ['Next.js 14', 'React 18', 'TypeScript', 'Tailwind CSS', 'Nodemailer', 'Zod', 'Vercel', 'GitHub CI/CD'],
+      features: ['Modern UI/UX with brand theming', 'RCM service modules (Medical Billing, Coding & Audit, Consulting)', '7-course training registration system', 'Email automation', 'Gmail SMTP integration', 'Admin + User notifications', 'Fully responsive design', 'Custom domain with SSL', 'Form validation with Zod', 'Healthcare industry design'],
+    },
   },
   education: {
     degree: 'B.E. Computer Science and Engineering',
@@ -170,7 +176,7 @@ function generateResponse(message: string): string {
 
   // Projects Section (navigation)
   if (lowerMessage.match(/(^project$|^projects$|^proj$|^pro$|^prj$|^prjt$|^apps$|^appz$|^applications$|portfolio projects|^websites$|^wrk$|^wrklist$|show projects|my work|real work|view projects|projects section)/)) {
-    return `Summary: These are Surya's real-world projects.\n\nDetails: 8+ production applications including bilingual platforms, healthcare systems, AI automation, medical association website, and textile management system.\n\nNext step: Choose any project if you want a deep explanation.\n\nscrollToSection("projects");`;
+    return `Summary: These are Surya's real-world projects.\n\nDetails: 9+ production applications including bilingual platforms, healthcare systems, AI automation, medical association website, healthcare RCM platform, and textile management system.\n\nNext step: Choose any project if you want a deep explanation.\n\nscrollToSection("projects");`;
   }
 
 
@@ -255,6 +261,12 @@ function generateResponse(message: string): string {
     return `ISC Digital Printing / Textile Report App\n\nThis is an internal client project and does not have a public link.`;
   }
 
+  // Project Links - MedFoxRCM
+  if (lowerMessage.match(/(medfox|medfoxrcm|med fox|healthcare|rcm|revenue cycle|medical billing|medical coding)/)) {
+    const p = knowledge.projects.medFoxRCM;
+    return `${p.name} 🚀\n\n${p.live}\n\nTech Stack: ${p.tech.join(', ')}\n\nFeatures:\n${p.features.map(f => `• ${f}`).join('\n')}`;
+  }
+
   // Demo/Live links
   if (lowerMessage.includes('demo') || lowerMessage.includes('live') || lowerMessage.includes('deployed') || lowerMessage.includes('show me')) {
     return `Live Project Demos: 🚀\n\n` +
@@ -262,6 +274,7 @@ function generateResponse(message: string): string {
       `2. Online Petition Portal\n   ${knowledge.projects.petition.live}\n\n` +
       `3. Hospital Management System\n   ${knowledge.projects.hospital.live}\n\n` +
       `4. API Trichy Medical Website\n   ${knowledge.projects.apiTrichy.live}\n\n` +
+      `5. MedFoxRCM Healthcare Platform\n   ${knowledge.projects.medFoxRCM.live}\n\n` +
       `Projects without public demos:\n` +
       `• AI Auto Reminder (n8n automation)\n` +
       `• User Management (can explain architecture)\n` +
@@ -276,12 +289,13 @@ function generateResponse(message: string): string {
       `1. Portfolio Website - ${knowledge.socialLinks.portfolio}\n` +
       `2. Online Petition Portal - ${knowledge.projects.petition.live}\n` +
       `3. Hospital Management System - ${knowledge.projects.hospital.live}\n` +
-      `4. API Trichy Chapter Website - ${knowledge.projects.apiTrichy.live}\n\n` +
+      `4. API Trichy Chapter Website - ${knowledge.projects.apiTrichy.live}\n` +
+      `5. MedFoxRCM Healthcare Platform - ${knowledge.projects.medFoxRCM.live}\n\n` +
       `Production Projects: 🔧\n` +
-      `5. AI Auto WhatsApp Reminder - AI-powered automation\n` +
-      `6. Smart Irrigation System - ARIMAX ML model\n` +
-      `7. User Management System - Full-stack CRUD\n` +
-      `8. ISC Textile Report App - Digital printing management (Client: Indian Soft Colours)\n\n` +
+      `6. AI Auto WhatsApp Reminder - AI-powered automation\n` +
+      `7. Smart Irrigation System - ARIMAX ML model\n` +
+      `8. User Management System - Full-stack CRUD\n` +
+      `9. ISC Textile Report App - Digital printing management (Client: Indian Soft Colours)\n\n` +
       `Ask about any specific project for details!`;
   }
 

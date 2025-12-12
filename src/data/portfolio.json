@@ -521,6 +521,40 @@
       "githubUrl": "https://github.com/tnsurya7/isc-textile-app",
       "liveUrl": "",
       "featured": true
+    },
+    {
+      "id": "8",
+      "title": "MedFoxRCM - Healthcare Revenue Cycle Management Platform",
+      "description": "Fully responsive Healthcare RCM website with medical coding course registration system",
+      "longDescription": "MedFoxRCM is a fully responsive and production-ready Healthcare RCM website built with Next.js 14. It combines business service presentation with a complete medical coding course registration system. Features modern UI/UX with brand-based theming, animations, and secure email automation for course registrations.",
+      "technologies": ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS", "Nodemailer", "Zod", "Vercel", "GitHub CI/CD"],
+      "features": [
+        "Modern UI/UX with brand-based theming & animations",
+        "RCM service modules: Medical Billing, Coding & Audit, Consulting",
+        "7-course training registration system",
+        "Email automation for course registrations",
+        "Secure Gmail SMTP integration",
+        "Admin + User notification system",
+        "Fully responsive design for mobile, tablet & desktop",
+        "Production deployment on Vercel",
+        "Custom domain with SSL certificate",
+        "Form validation with Zod",
+        "Professional healthcare industry design",
+        "Service presentation pages",
+        "Course catalog and registration flow",
+        "Automated email confirmations",
+        "Contact form integration",
+        "SEO optimized pages",
+        "Fast loading performance",
+        "Accessibility compliant",
+        "GitHub CI/CD pipeline"
+      ],
+      "challenges": "Creating a professional healthcare industry website that combines service presentation with a functional course registration system, implementing secure email automation, and ensuring HIPAA-compliant design considerations.",
+      "image": "/medfoxrcm.png",
+      "images": [],
+      "githubUrl": "https://github.com/tnsurya7/medfoxrcm",
+      "liveUrl": "https://medfoxrcm.com",
+      "featured": true
     }
   ],
   "contactMessages": []
