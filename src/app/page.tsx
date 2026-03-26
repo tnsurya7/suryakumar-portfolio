@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { 
   Github, Linkedin, Instagram, Facebook, MessageCircle, 
@@ -12,34 +12,17 @@ import toast from 'react-hot-toast';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import SuryaAI from '@/components/SuryaAI';
+import portfolioData from '@/data/portfolio.json';
 
 export default function HomePage() {
-  const [socialLinks, setSocialLinks] = useState<any[]>([]);
-  const [skills, setSkills] = useState<any[]>([]);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [education, setEducation] = useState<any[]>([]);
-  const [internships, setInternships] = useState<any[]>([]);
-  const [certificates, setCertificates] = useState<any[]>([]);
+  const socialLinks = portfolioData.socialLinks;
+  const skills = portfolioData.skills;
+  const projects = portfolioData.projects;
+  const education = portfolioData.education;
+  const internships = portfolioData.internships;
+  const certificates = portfolioData.certificates;
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-
-  useEffect(() => {
-    Promise.all([
-      fetch('/api/social-links').then(res => res.json()),
-      fetch('/api/skills').then(res => res.json()),
-      fetch('/api/projects').then(res => res.json()),
-      fetch('/api/education').then(res => res.json()),
-      fetch('/api/internships').then(res => res.json()),
-      fetch('/api/certificates').then(res => res.json()),
-    ]).then(([social, skillsData, projectsData, edu, intern, cert]) => {
-      setSocialLinks(Array.isArray(social) ? social : []);
-      setSkills(Array.isArray(skillsData) ? skillsData : []);
-      setProjects(Array.isArray(projectsData) ? projectsData : []);
-      setEducation(Array.isArray(edu) ? edu : []);
-      setInternships(Array.isArray(intern) ? intern : []);
-      setCertificates(Array.isArray(cert) ? cert : []);
-    });
-  }, []);
 
   const iconMap: any = {
     github: Github,
