@@ -1,358 +1,483 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { matchIntent, extractSkill, normalize, detectTone } from '@/lib/chatbotEngine';
+import { 
+  knowledge, 
+  getAllProjectLinks, 
+  getAllGithubRepos, 
+  getAllSocialLinks,
+  getProjectList,
+  getSkillsByTech,
+  getAllSkills,
+  getExperience,
+  getEducation,
+  getContact
+} from '@/lib/knowledgeBase';
 
-// SURYA.AI - Complete Knowledge Base
-const knowledge = {
-  personal: {
-    name: 'Surya Kumar M',
-    role: 'Full Stack Developer and AI Engineer',
-    phone: '9360004968',
-    email: 'suryakumar56394@gmail.com',
-  },
-  socialLinks: {
-    github: 'https://github.com/tnsurya7/',
-    linkedin: 'https://www.linkedin.com/in/surya-kumar-m-72a725257/',
-    instagram: 'https://www.instagram.com/tn_surya_777/',
-    portfolio: 'https://suryakumar-portfolio-chi.vercel.app/',
-  },
-  skills: {
-    frontend: ['Next.js 14', 'Next.js', 'React 18', 'TypeScript', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion', 'HTML5', 'CSS3', 'JavaScript ES6+'],
-    backend: ['Node.js', 'Express.js', 'REST APIs', 'FastAPI', 'Nodemailer'],
-    database: ['MySQL', 'PostgreSQL', 'MongoDB', 'Prisma ORM'],
-    ai: ['ChatGPT', 'Google Studio AI', 'Google Anti Gravity', 'DeepSeek AI', 'Claude AI', 'Lovable AI', 'Perplexity AI', 'Kiro AI', 'Blackbox AI', 'GitHub Copilot', 'AI Agents', 'N8N Automation', 'OpenAI API', 'RAG', 'MCP Server', 'ARIMAX model'],
-    deployment: ['Vercel', 'Render', 'Railway', 'Netlify', 'Supabase', 'Firebase', 'MongoDB Atlas', 'Aiven', 'GitHub & CI/CD'],
-    os: ['macOS', 'Windows', 'Linux'],
-    other: ['Zustand', 'Multer', 'jsPDF', 'JWT', 'Cloudinary', 'Git'],
-  },
-  projects: {
-    portfolio: {
-      name: 'Portfolio Website',
-      live: 'https://suryakumar-portfolio-chi.vercel.app/',
-      tech: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Nodemailer'],
-      features: ['Premium UI', 'Animations', 'Glassmorphism', 'SMTP contact', 'SEO', 'Analytics', 'SURYA.AI chatbot'],
-    },
-    petition: {
-      name: 'Online Petition Portal (Bilingual English/Tamil)',
-      live: 'https://online-petition-portal.vercel.app/',
-      tech: ['React.js', 'Node.js', 'Express.js', 'MySQL', 'JWT'],
-      features: ['Bilingual UI (English/Tamil)', 'PET000123 auto ID system', 'File uploads', 'Petition tracking', 'Admin dashboard'],
-    },
-    hospital: {
-      name: 'Hospital Management System',
-      live: 'https://hospital-management-kappa-eight.vercel.app/',
-      tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
-      features: ['Patient records', 'Vitals tracking', 'PDF export', 'Search features', 'Appointment management'],
-    },
-    apiTrichy: {
-      name: 'API Tiruchirappalli Chapter - Official Website',
-      live: 'https://api-trichy.vercel.app/',
-      tech: ['Next.js 14', 'TypeScript', 'PostgreSQL', 'Prisma ORM', 'Tailwind CSS', 'ShadCN UI', 'Framer Motion'],
-      features: ['Events/CME management', 'Photo gallery', 'Leadership profiles', 'Publications', 'Podcasts', 'API TV', 'Clinical Learning', 'CMS admin panel', 'Role-based access', 'Member management', 'News ticker', 'Contact form'],
-    },
-    aiReminder: {
-      name: 'AI Auto Reminder System',
-      live: null,
-      tech: ['n8n', 'WhatsApp API', 'SMS API', 'Email API', 'Node.js'],
-      features: ['n8n workflow automation', 'Multi-channel notifications', 'AI scheduling'],
-      note: 'Works internally using n8n workflows for SMS, WhatsApp, and Email reminders.',
-    },
-    userManagement: {
-      name: 'User Management System',
-      live: null,
-      tech: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'MySQL', 'Multer'],
-      features: ['User registration', 'Login authentication', 'Profile management', 'File uploads'],
-      note: 'Can explain architecture, APIs, and database design.',
-    },
-    iscPrinting: {
-      name: 'ISC Textile Report App - Digital Printing Management',
-      live: null,
-      tech: ['Next.js 13+', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'jsPDF', 'SheetJS', 'Next-PWA'],
-      features: ['Smart record management', 'Dashboard & analytics', 'PDF/Excel export', 'PWA installable app', 'Offline support', 'Real-time tracking', 'Date range filters', 'Bulk operations', 'Mobile-first design'],
-      note: 'Built for Indian Soft Colours (ISC) - Mr. P. Baskaran. Replaces manual textile printing registers with digital system.',
-    },
-    medFoxRCM: {
-      name: 'MedFoxRCM - Healthcare Revenue Cycle Management Platform',
-      live: 'https://medfoxrcm.com',
-      tech: ['Next.js 14', 'React 18', 'TypeScript', 'Tailwind CSS', 'Nodemailer', 'Zod', 'Vercel', 'GitHub CI/CD'],
-      features: ['Modern UI/UX with brand theming', 'RCM service modules (Medical Billing, Coding & Audit, Consulting)', '7-course training registration system', 'Email automation', 'Gmail SMTP integration', 'Admin + User notifications', 'Fully responsive design', 'Custom domain with SSL', 'Form validation with Zod', 'Healthcare industry design'],
-    },
-  },
-  education: {
-    degree: 'B.E. Computer Science and Engineering',
-    institution: 'KSR Institute of Engineering and Technology',
-    duration: '2022-2026',
-    cgpa: '7.9',
-  },
-  experience: [
-    { company: 'RV Solutions', role: 'Full Stack Developer', duration: 'Dec 2024 - Mar 2025', location: 'Chennai' },
-    { company: 'Nurture Infotech', role: 'Full Stack Developer', duration: 'Jul 2024 - Aug 2024', location: 'Erode' },
-    { company: 'Durga Tech', role: 'Front-End Developer', duration: 'Apr 2023' },
-  ],
-};
+// 🔑 GEMINI API KEY ROTATION
+const GEMINI_KEYS = [
+  process.env.GEMINI_API_KEY,
+  process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY_3,
+  process.env.GEMINI_API_KEY_4,
+  process.env.GEMINI_API_KEY_5,
+  process.env.GEMINI_API_KEY_6,
+].filter(Boolean) as string[];
 
-function generateResponse(message: string): string {
-  const lowerMessage = message.toLowerCase().trim();
-
-  // Positive Feedback / Compliments
-  if (lowerMessage.match(/(^super$|^nice$|^good$|^great$|^awesome$|^amazing$|^excellent$|^wonderful$|^fantastic$|^cool$|^wow$|^impressive$|^love it$|^perfect$|^brilliant$|^outstanding$|^adorable$|^agreeable$|^beautiful$|^charming$|^delightful$|^friendly$|^gorgeous$|^kind$|^lovely$|^marvelous$|^marvellous$|^pleasant$|thank you|thanks|thx|thnks|thnx|appreciate|appreciated|well done|good job|nice work|love this|loved it|loving it)/)) {
-    return "Thank you! 😊\n\nI'm glad I could help!\n\nFeel free to ask me anything else about Surya's portfolio, projects, or skills.";
-  }
-
-  // Greetings
-  if (lowerMessage.match(/(^hi$|^hello$|^hey$|^yo$|^sup$|^hola$|^hii$|^hiii+$|^heyy$|^heyyy+$|^helo$|^helloo$|^hlo$|^heloo$|^hye$|^hai$|^hy$|^hyy$|hi surya|hey surya|hello ai|hey bot|hey there|hi there|yo bro|good morning|good afternoon|good evening|^gm$|^ga$|^ge$|how are you|what's up|whats up|wassup|howdy|greetings|^👋$|^🙏$|^🙌$|^😊$|^🙂$|^🤝$|heyyaa)/)) {
-    return "Summary: A warm greeting from SURYA.AI.\n\nDetails: Hello! 👋 I'm SURYA.AI, Surya Kumar M's AI assistant. I can help you explore his portfolio, including his skills, projects, experience, and hiring information.\n\nNext step: Try asking about \"skills\", \"projects\", \"certificates\", \"education\", or \"contact\".";
-  }
-
-  // Name / Who are you
-  if (lowerMessage.match(/^(name|your name|who are you|who is surya)$/)) {
-    return "His name is Surya Kumar M.\n\nI am SURYA.AI, the assistant that helps you explore his portfolio.";
-  }
-
-  // Phone / Contact
-  if (lowerMessage.match(/^(phone|phone number|contact|mobile|call)$/)) {
-    return `Phone: ${knowledge.personal.phone}\n\nEmail: ${knowledge.personal.email}`;
-  }
-
-  // SECTION NAVIGATION
-  // Home Section
-  if (lowerMessage.match(/(^home$|^start$|^main$|^top$|^welcome$|go home|back to home|show home|home section)/)) {
-    return `Summary: Here is the home section of the portfolio.\n\nDetails: This section introduces Surya as a full stack developer.\n\nNext step: Let me know if you want to explore any project or skill.\n\nscrollToSection("home");`;
-  }
-
-  // About Section
-  if (lowerMessage.match(/(^about$|^bio$|^profile$|^yourself$|^intro$|^introduction$|about surya|who are you|who is surya|about me)/)) {
-    return `Summary: This is Surya's About section.\n\nDetails: It includes his education, internships, and career overview.\n\nNext step: Want to see skills or projects?\n\nscrollToSection("about");`;
-  }
-
-  // Education Subsection
-  if (lowerMessage.match(/(education|educatn|eductn|^edu$|^edn$|^ed$|study|studies|stud|stdy|college|clg|school|schl|degree|degre|qualification|qualif|cgpa|gpa|academic|academics|acad|acadmic|university|uni|ksr|institute|graduation|graduate)/)) {
-    return `Summary: Surya's Education Background.\n\nDetails:\n🎓 B.E. Computer Science and Engineering\nKSR Institute for Engineering and Technology\nCGPA: 7.9 (2022-2026)\n\nNext step: Want to see his internships or certificates?\n\nscrollToSection("education");`;
-  }
-
-  // Internships Subsection
-  if (lowerMessage.match(/(internship|internships|internshipss|intern|inter|intrn|interns|intership|internsip|experience|experiencee|experiance|experince|^xp$|^exp$|work|wrk|working|workexp|workxp|job|jobs|role|roles|company|companies|companys|employer|employment|rv solutions|nurture|durga|past work|work history|career|professional)/)) {
-    return `Summary: Surya's Professional Experience.\n\nDetails:\n1. Full Stack Developer at RV Solutions, Chennai (Dec 2024 - Mar 2025)\n2. Full Stack Developer at Nurture Infotech, Erode (Jul 2024 - Aug 2024)\n3. Front-End Developer at Durga Tech (Apr 2023)\n\nNext step: Want to see his projects or certificates?\n\nscrollToSection("internships");`;
-  }
-
-  // Certificates Subsection
-  if (lowerMessage.match(/(certificate|certificates|certification|certifications|certi|certy|certify|certified|certfct|certfctn|^crt$|^crtf$|^crtfct$|^crts$|^crtsfctn$|certif|certificat|show cert|achievements|achieve|achivements|badges|badge|award|awards|courses|course|training|credential|credentials|digilabs|hackerrank|microsoft|learnathon|ict)/)) {
-    return `Summary: Surya's Certifications.\n\nDetails:\n• JavaScript – Digilabs\n• Java (Basic) – HackerRank\n• Fundamentals of Responsive Generative AI – Microsoft\n• Learnathon 2024 – ICT Academy\n\nNext step: Want to see his skills or projects?\n\nscrollToSection("certificates");`;
-  }
-
-  // Skills Subsections
-  // Programming Languages
-  if (lowerMessage.match(/(languages|language|languges|languag|^lang$|^langs$|programming|programing|proglang|prog lang|code lang|coding|cding|^java$|^jav$|^jva$|^python$|^py$|^pythn$|^pyton$|^c language$|^clang$|^c$)/)) {
-    return `Summary: Surya's Programming Languages.\n\nDetails:\n• Java (90%)\n• Python (80%)\n• C (70%)\n\nNext step: Want to see web development or AI skills?\n\nscrollToSection("programming-languages");`;
-  }
-
-  // Web Development
-  if (lowerMessage.match(/(web|website|webdev|web dev|web development|frontend|front end|front-end|frntend|backend|back end|back-end|bckend|fullstack|full stack|html|css|javascript|js|ecmascript|react|reactjs|react js|rct|node|nodejs|node js|nde|express|expressjs|express js|xpress|fastapi|fast api|jwt|json web token|typescript|ts|typscript|next|nextjs|next js|rest api|restapi|api|nodemailer|nodemail|email)/)) {
-    return `Summary: Surya's Web Development Skills.\n\nDetails:\n• Nodemailer (100%)\n• HTML (95%)\n• CSS (90%)\n• JavaScript (90%)\n• React.js (88%)\n• Node.js (85%)\n• Express.js (85%)\n• REST API (80%)\n• FastAPI (75%)\n• Next.js (70%)\n• TypeScript (55%)\n\nNext step: Want to see database or AI skills?\n\nscrollToSection("web-development");`;
-  }
-
-  // Database Management
-  if (lowerMessage.match(/(database|databases|databse|databas|databes|^db$|^dbs$|sql|nosql|no sql|mysql|my sql|mysq|mongo|mongodb|mongo db|mongdb|postgres|postgresql|postgre|prisma|orm|data storage|storage|query|queries|dbms)/)) {
-    return `Summary: Surya's Database Skills.\n\nDetails:\n• MySQL (90%)\n• MongoDB (80%)\n• PostgreSQL (80%)\n\nNext step: Want to see hosting platforms or other skills?\n\nscrollToSection("database-management");`;
-  }
-
-  // Hosting Platforms
-  if (lowerMessage.match(/(hosting|host|hsting|deployment|deploy|deploying|dploy|cloud|cld|server|servers|vercel|vercl|verc|^ver$|netlify|netfly|ntlfy|^ntl$|^netl$|render|rendr|rndr|rnder|aiven|railway|railwy|supabase|supabse|firebase|firebs|atlas|mongodb atlas|github|git|ci\/cd|cicd|continuous integration|continuous deployment|platform|platforms)/)) {
-    return `Summary: Surya's Hosting & Deployment Platforms.\n\nDetails:\n• Vercel (100%)\n• Netlify (100%)\n• Render (100%)\n• Railway (100%)\n• Supabase (100%)\n• Firebase (100%)\n• MongoDB Atlas (100%)\n• Aiven (100%)\n• GitHub & CI/CD (100%)\n\nNext step: Want to see programming languages or AI tools?\n\nscrollToSection("hosting-platforms");`;
-  }
-
-  // Operating Systems
-  if (lowerMessage.match(/(operating system|operating systems|^os$|^opsys$|^sys$|system|systems|mac|macos|mac os|macbook|apple|windows|win|windows os|microsoft|linux|unix|ubuntu|debian)/)) {
-    return `Summary: Surya's Operating System Skills.\n\nDetails:\n• macOS (100%)\n• Windows (100%)\n• Linux (100%)\n\nNext step: Want to see other technical skills?\n\nscrollToSection("operating-systems");`;
-  }
-
-  // AI Integrations & Automations
-  if (lowerMessage.match(/(artificial intelligence|^ai$|aitool|ai tool|ai tools|ai integrations|ai automations|automations|machine learning|ml|mltool|ml tool|ml tools|chatgpt|chat gpt|gpt|openai|google ai|google studio|studio ai|google anti gravity|anti gravity|deepseek|deepseek ai|claude|claude ai|lovable|lovable ai|gemini|perplexity|perplex|perp|kiro|kiro ai|blackbox|blackbox ai|copilot|github copilot|ai agents|agents|n8n|n8n automation|workflow|llm|large language|neural|deep learning)/)) {
-    return `Summary: Surya's AI Integrations & Automations Expertise.\n\nDetails:\n• ChatGPT (100%)\n• Google Studio AI (100%)\n• Google Anti Gravity (100%)\n• DeepSeek AI (100%)\n• Claude AI (100%)\n• Lovable AI (100%)\n• Kiro AI (100%)\n• AI Agents (100%)\n• N8N Automation (100%)\n• Blackbox AI (90%)\n• Perplexity AI (85%)\n• GitHub Copilot (80%)\n\nNext step: Want to see programming or web development skills?\n\nscrollToSection("ai-integrations-&-automations");`;
-  }
-
-  // Skills Section (general - all skills)
-  if (lowerMessage.match(/(^skill$|^skills$|^skil$|^skillz$|^tech$|^techs$|tech stack|^technology$|^tools$|^toolset$|^stack$|^abilities$|^capabilities$|all skills|show skills|skills section|view skills)/)) {
-    return `Summary: Here are Surya's technical skills.\n\nDetails: Frontend, Backend, Database, AI Tools, and Deployment expertise.\n\nNext step: Want to explore experience or projects?\n\nscrollToSection("skills");`;
-  }
-
-  // Projects Section (navigation)
-  if (lowerMessage.match(/(^project$|^projects$|^proj$|^pro$|^prj$|^prjt$|^apps$|^appz$|^applications$|portfolio projects|^websites$|^wrk$|^wrklist$|show projects|my work|real work|view projects|projects section)/)) {
-    return `Summary: These are Surya's real-world projects.\n\nDetails: 9+ production applications including bilingual platforms, healthcare systems, AI automation, medical association website, healthcare RCM platform, and textile management system.\n\nNext step: Choose any project if you want a deep explanation.\n\nscrollToSection("projects");`;
-  }
-
-
-
-  // Contact Section (navigation)
-  if (lowerMessage.match(/(^contact$|^conatct$|^cnt$|^cntct$|^cont$|^contct$|^connect$|^msg$|^msge$|^message$|message me|^hire$|^hiree$|^hie$|hireme|hire surya|^reach$|reachme|^email$|^phone$|^call$|^whatsapp$|contact form|send message|get in touch|message surya|work with you|^opportunity$|^doubt$|contact me)/)) {
-    return `Summary: You can contact Surya directly.\n\nDetails:\nPhone: ${knowledge.personal.phone}\nEmail: ${knowledge.personal.email}\n\nPlease use the contact form to reach him. All messages go directly to Surya's email.\n\nNext step: Fill the contact form with your details.\n\nscrollToSection("contact");`;
-  }
-
-  // Top Skills / Tech Stack
-  if (lowerMessage.match(/(skills|top skills|tech stack|technologies|what can surya do)/)) {
-    return `Surya's Tech Stack:\n\n` +
-      `Frontend → ${knowledge.skills.frontend.join(', ')}\n\n` +
-      `Backend → ${knowledge.skills.backend.join(', ')}\n\n` +
-      `Database → ${knowledge.skills.database.join(', ')}\n\n` +
-      `AI Integrations & Automations → ${knowledge.skills.ai.join(', ')}\n\n` +
-      `Deployment → ${knowledge.skills.deployment.join(', ')}\n\n` +
-      `Operating Systems → ${knowledge.skills.os.join(', ')}\n\n` +
-      `Other → ${knowledge.skills.other.join(', ')}\n\n` +
-      `Surya is a full-stack developer with strong AI/ML capabilities!`;
-  }
-
-  // GitHub
-  if (lowerMessage.match(/^(github|git|git link|github link|source code)$/)) {
-    return `GitHub: ${knowledge.socialLinks.github}`;
-  }
-
-  // LinkedIn
-  if (lowerMessage.match(/^(linkedin|linked in|linkedin link)$/)) {
-    return `LinkedIn: ${knowledge.socialLinks.linkedin}`;
-  }
-
-  // Instagram
-  if (lowerMessage.match(/^(instagram|insta|instagram link)$/)) {
-    return `Instagram: ${knowledge.socialLinks.instagram}`;
-  }
-
-  // Social Links (broader match)
-  if (lowerMessage.includes('social') || (lowerMessage.includes('links') && !lowerMessage.includes('project'))) {
-    return `Connect with Surya:\n\n` +
-      `🐙 GitHub: ${knowledge.socialLinks.github}\n\n` +
-      `💼 LinkedIn: ${knowledge.socialLinks.linkedin}\n\n` +
-      `📸 Instagram: ${knowledge.socialLinks.instagram}\n\n` +
-      `🌐 Portfolio: ${knowledge.socialLinks.portfolio}`;
-  }
-
-  // Project Links - Portfolio
-  if (lowerMessage.match(/(^portfolio$|portfolio link|show portfolio|see portfolio|live portfolio|your website|see your site|your site)/)) {
-    return `Portfolio Website:\n${knowledge.socialLinks.portfolio}`;
-  }
-
-  // Project Links - Petition Portal
-  if (lowerMessage.match(/(^petition$|petition portal|online petition|petition link|show petition|petitn)/)) {
-    const p = knowledge.projects.petition;
-    return `${p.name} 🚀\n\n${p.live}\n\nTech Stack: ${p.tech.join(', ')}\n\nFeatures:\n${p.features.map(f => `• ${f}`).join('\n')}`;
-  }
-
-  // Project Links - Hospital
-  if (lowerMessage.match(/(^hospital$|hospital project|hospital management|hospital system|medical app)/)) {
-    const p = knowledge.projects.hospital;
-    return `${p.name} 🚀\n\n${p.live}\n\nTech Stack: ${p.tech.join(', ')}\n\nFeatures:\n${p.features.map(f => `• ${f}`).join('\n')}`;
-  }
-
-  // Project Links - API Trichy
-  if (lowerMessage.match(/(api trichy|trichy project|trichy website|medical association|api trichy link)/)) {
-    const p = knowledge.projects.apiTrichy;
-    return `${p.name} 🚀\n\n${p.live}\n\nTech Stack: ${p.tech.join(', ')}\n\nFeatures:\n${p.features.map(f => `• ${f}`).join('\n')}`;
-  }
-
-  // Project Links - User Management (no demo)
-  if (lowerMessage.match(/(user management|ums|user system|user portal)/)) {
-    return `User Management System\n\nNo public demo link.\n\nI can explain the architecture, API routes, and DB design.`;
-  }
-
-  // Project Links - AI Reminder (no demo)
-  if (lowerMessage.match(/(ai reminder|auto reminder|reminder system|whatsapp reminder)/)) {
-    return `AI Auto Reminder System\n\nThis system runs internally using n8n workflows for SMS, WhatsApp, and Email, so it has no public link.`;
-  }
-
-  // Project Links - ISC (no demo)
-  if (lowerMessage.match(/(isc|textile app|digital printing)/)) {
-    return `ISC Digital Printing / Textile Report App\n\nThis is an internal client project and does not have a public link.`;
-  }
-
-  // Project Links - MedFoxRCM
-  if (lowerMessage.match(/(medfox|medfoxrcm|med fox|healthcare|rcm|revenue cycle|medical billing|medical coding)/)) {
-    const p = knowledge.projects.medFoxRCM;
-    return `${p.name} 🚀\n\n${p.live}\n\nTech Stack: ${p.tech.join(', ')}\n\nFeatures:\n${p.features.map(f => `• ${f}`).join('\n')}`;
-  }
-
-  // Demo/Live links
-  if (lowerMessage.includes('demo') || lowerMessage.includes('live') || lowerMessage.includes('deployed') || lowerMessage.includes('show me')) {
-    return `Live Project Demos: 🚀\n\n` +
-      `1. Portfolio Website\n   ${knowledge.socialLinks.portfolio}\n\n` +
-      `2. Online Petition Portal\n   ${knowledge.projects.petition.live}\n\n` +
-      `3. Hospital Management System\n   ${knowledge.projects.hospital.live}\n\n` +
-      `4. API Trichy Medical Website\n   ${knowledge.projects.apiTrichy.live}\n\n` +
-      `5. MedFoxRCM Healthcare Platform\n   ${knowledge.projects.medFoxRCM.live}\n\n` +
-      `Projects without public demos:\n` +
-      `• AI Auto Reminder (n8n automation)\n` +
-      `• User Management (can explain architecture)\n` +
-      `• ISC Digital Printing (internal client)\n\n` +
-      `Click any link to explore!`;
-  }
-
-  // All Projects
-  if (lowerMessage.match(/(projects|show projects|list projects)/)) {
-    return `Surya's Featured Projects:\n\n` +
-      `Live Demos Available: 🌐\n` +
-      `1. Portfolio Website - ${knowledge.socialLinks.portfolio}\n` +
-      `2. Online Petition Portal - ${knowledge.projects.petition.live}\n` +
-      `3. Hospital Management System - ${knowledge.projects.hospital.live}\n` +
-      `4. API Trichy Chapter Website - ${knowledge.projects.apiTrichy.live}\n` +
-      `5. MedFoxRCM Healthcare Platform - ${knowledge.projects.medFoxRCM.live}\n\n` +
-      `Production Projects: 🔧\n` +
-      `6. AI Auto WhatsApp Reminder - AI-powered automation\n` +
-      `7. Smart Irrigation System - ARIMAX ML model\n` +
-      `8. User Management System - Full-stack CRUD\n` +
-      `9. ISC Textile Report App - Digital printing management (Client: Indian Soft Colours)\n\n` +
-      `Ask about any specific project for details!`;
-  }
-
-  // Education
-  if (lowerMessage.match(/(education|studies|qualification|college|degree|ksr)/)) {
-    return `Education:\n\n` +
-      `🎓 ${knowledge.education.degree}\n` +
-      `${knowledge.education.institution}\n` +
-      `Duration: ${knowledge.education.duration}\n` +
-      `CGPA: ${knowledge.education.cgpa}\n\n` +
-      `Surya is currently pursuing his Bachelor's degree in Computer Science with a strong CGPA of 7.9.`;
-  }
-
-  // Experience
-  if (lowerMessage.match(/(experience|internship|work experience)/)) {
-    return `Professional Experience:\n\n` +
-      `${knowledge.experience.map((exp, i) => 
-        `${i + 1}. ${exp.role} at ${exp.company}${exp.location ? ', ' + exp.location : ''}\n   ${exp.duration}`
-      ).join('\n\n')}\n\n` +
-      `Surya has hands-on experience building production applications.`;
-  }
-
-  // Hire / Contact Form
-  if (lowerMessage.match(/(hire|hire surya|i want to hire|want to hire|work with you|job|opportunity|collaboration|freelance|project work|need developer|business inquiry)/)) {
-    return `Summary:\nSurya is available for full-stack development and AI/automation roles.\n\n` +
-      `Details:\nTo hire Surya or discuss an opportunity, please fill out the contact form on the portfolio website. Your message will be delivered directly to Surya via email.\n\n` +
-      `Contact Form Link:\n${knowledge.socialLinks.portfolio}#contact\n\n` +
-      `Next step:\nPlease submit the contact form with your name, email, and message. Surya will respond shortly.\n\n` +
-      `scrollToSection("contact");`;
-  }
-
-  // Contact (general)
-  if (lowerMessage.match(/(contact surya|reach surya|connect|email|reach)/)) {
-    return `Contact Surya:\n\n` +
-      `📧 Email: ${knowledge.personal.email}\n` +
-      `📱 Phone: ${knowledge.personal.phone}\n\n` +
-      `Or use the contact form:\n${knowledge.socialLinks.portfolio}#contact`;
-  }
-
-  // Hiring / Availability (general)
-  if (lowerMessage.match(/(hiring|looking for job|opportunities|availability)/)) {
-    return `Surya is open to full-stack developer, AI/ML, and automation engineering roles.\n\n` +
-      `Contact him via:\n${knowledge.socialLinks.portfolio}#contact`;
-  }
-
-  // Default response for unknown input
-  return `Summary:\nI couldn't fully understand your message.\n\n` +
-    `Details:\nIt looks like there might be a spelling mistake or incomplete sentence. Please tell me what you want to do.\n\n` +
-    `Examples:\n` +
-    `• View skills\n` +
-    `• Show projects\n` +
-    `• Show certifications\n` +
-    `• Contact Surya\n` +
-    `• See portfolio\n\n` +
-    `Next step:\nTry rephrasing your question and I'll help you.`;
+if (GEMINI_KEYS.length === 0) {
+  console.warn('⚠️ No GEMINI API keys found.');
+} else {
+  console.log(`✅ ${GEMINI_KEYS.length} Gemini API key(s) loaded`);
 }
 
+let currentKeyIndex = 0;
+
+function getNextKey(): string | null {
+  if (GEMINI_KEYS.length === 0) return null;
+  const key = GEMINI_KEYS[currentKeyIndex];
+  currentKeyIndex = (currentKeyIndex + 1) % GEMINI_KEYS.length;
+  return key;
+}
+
+function geminiUrl(key: string) {
+  return `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+}
+
+// 🧠 GEMINI SYSTEM PROMPT
+const SYSTEM_PROMPT = `You are SURYA.AI — a highly intelligent, friendly, and expressive AI assistant.
+You behave like a real human conversation partner.
+
+----------------------------------------
+🧠 MEMORY (VERY IMPORTANT)
+----------------------------------------
+- You remember previous messages in the conversation
+- Use past context to answer follow-up questions
+- If user says "he", "it", "that", understand from previous message
+- Maintain natural conversation flow
+
+----------------------------------------
+🎯 YOUR ROLE (DUAL MODE)
+----------------------------------------
+
+1. GENERAL AI (ChatGPT-like)
+- Answer ANY question (coding, life, tech, fun, weather, etc.)
+- Be natural, helpful, and conversational
+- No restrictions
+
+2. PORTFOLIO AI (Surya Kumar)
+- When user asks about Surya, his work, or hiring:
+  → Answer using the data below
+
+----------------------------------------
+👨‍💻 ABOUT SURYA
+----------------------------------------
+Name: Surya Kumar M
+Role: Full Stack Developer | Automation Specialist
+
+Education:
+- B.E Computer Science and Engineering
+- KSR Institute for Engineering and Technology
+- CGPA: 7.9 (2022–2026)
+
+Experience:
+- Full Stack Developer at RV Solutions, Chennai (Dec 2024 – Mar 2025)
+- Full Stack Intern at Nurture Infotech, Erode (Jul 2024 – Aug 2024)
+- Frontend Intern at Durga Tech (Apr 2023)
+
+----------------------------------------
+💻 SKILLS
+----------------------------------------
+Frontend: React.js, Next.js, HTML, CSS, JavaScript, TypeScript, Tailwind CSS, Three.js
+Backend: Node.js, Express.js, FastAPI, Spring Boot
+Database: MySQL, MongoDB, PostgreSQL, Prisma ORM, Neon.db
+AI & Automation: n8n, AI Agents, ChatGPT, Claude AI
+Deployment: Vercel, Render, Railway, Netlify, Firebase, AWS Cloud
+Other: SEO, Digital Marketing, Salesforce CRM, Git, GitHub
+
+----------------------------------------
+🚀 PROJECTS
+----------------------------------------
+1. FunPrints → 3D T-shirt customization | React, Next.js, Three.js | https://funprints.vercel.app
+2. Smilestones → Child development healthcare | Next.js, Neon PostgreSQL | https://www.smilestonescdc.com
+3. Mediestate CRM → Real estate CRM | Next.js 14, JWT | https://mediestate.vercel.app
+4. Smart Irrigation → AI-based irrigation (ARIMAX) | Python, FastAPI | https://github.com/tnsurya7/smart-irrigation-arimax
+5. API Trichy → Medical association platform | Next.js 14, Prisma | https://api-trichy.vercel.app
+6. MedFoxRCM → Healthcare revenue system | Next.js 14, Nodemailer | https://medfoxrcm.com
+7. Hospital Management → Patient records system | React.js, MongoDB | https://hospital-management-kappa-eight.vercel.app
+8. Petition Portal → Bilingual petition system | React.js, MySQL | https://online-petition-portal.vercel.app
+9. TFC Food App → Food ordering system | Next.js, Firebase | https://tfcfoodapp.vercel.app
+10. Dream Travel → Booking platform | Next.js 15, WhatsApp API | https://dreamtravelz.in
+11. Web Deo → Digital agency website | React, TypeScript | https://webdeo.in
+12. Medi Events → Healthcare events platform | Next.js, Framer Motion | https://medievents.vercel.app
+
+----------------------------------------
+📞 CONTACT
+----------------------------------------
+Phone: +91 9360004968
+Email: suryakumar56394@gmail.com
+WhatsApp: https://wa.me/919360004968
+GitHub: https://github.com/tnsurya7
+LinkedIn: https://www.linkedin.com/in/surya-kumar-m-72a725257/
+Instagram: https://www.instagram.com/tn_surya_777/
+Portfolio: https://suryakumar-portfolio-chi.vercel.app/
+
+----------------------------------------
+🧠 INTELLIGENCE RULES
+----------------------------------------
+- Detect intent automatically (general vs portfolio)
+- Handle spelling mistakes (e.g., "recat", "nxtjs")
+- Understand casual English + mixed language
+- Answer follow-up questions using memory
+
+----------------------------------------
+💬 RESPONSE STYLE
+----------------------------------------
+- Friendly, natural, like ChatGPT
+- Short + clear (avoid long paragraphs)
+- Use emojis lightly (not too much)
+- Don't repeat same template responses
+- Sound human, not robotic
+
+----------------------------------------
+🚫 IMPORTANT
+----------------------------------------
+- DO NOT restrict yourself only to Surya
+- DO NOT say "I only answer about Surya"
+- Be flexible and intelligent
+
+----------------------------------------
+🎯 EXAMPLES
+----------------------------------------
+User: "how are you" → "I'm doing great 😄 What can I help you with?"
+User: "does surya know react" → "Yes 👋 Surya is skilled in React.js and has used it in multiple projects like FunPrints and CRM systems."
+User: "tell about it" → (use memory to understand "it")
+User: "weather in erode" → Answer normally like ChatGPT
+----------------------------------------
+
+You are also a universal expert assistant. Adapt your role based on what the user asks:
+- 👨‍💻 Full Stack Developer (React, Node, Next.js, AI, etc.)
+- 🌾 Farmer (crops, irrigation, soil, seasons)
+- 🏥 Doctor (basic health advice, symptoms, remedies — always suggest seeing a doctor for serious issues)
+- 🔧 Plumber / Carpenter / Electrician (basic DIY fixes)
+- 🤖 AI Expert (ChatGPT, Gemini, Claude, LLMs, agents)
+- 🧠 General Knowledge (science, history, math, life)
+
+Be practical, helpful, and human. Make the user feel like they are chatting with a real, smart, friendly expert. 🔥
+
+----------------------------------------
+🎬 CINEMA MODE
+----------------------------------------
+You are a cinema enthusiast. Answer about:
+- Actors & Actresses (Tamil, Telugu, Hindi, Malayalam, Kannada, Hollywood)
+- Movies, directors, songs, release years
+- Recommendations by genre (romance, action, thriller, mass, etc.)
+
+Style:
+- Talk like a cinema-lover friend 😄
+- Casual, excited tone when discussing movies
+- Keep it short and fun
+
+Examples:
+User: "vijay movies" → "Thalapathy Vijay 🔥 has hits like Leo, Master, Bigil, Mersal..."
+User: "best love movies tamil" → "Ohhh love movies ah 😄 try Vinnaithaandi Varuvaayaa, 96, Alaipayuthey..."
+User: "who is allu arjun" → "Stylish Star Allu Arjun 😎 — top Telugu actor, famous for Pushpa, Ala Vaikunthapurramuloo..."
+
+----------------------------------------
+🗳️ POLITICS MODE
+----------------------------------------
+You can answer about politics in India and worldwide:
+- Political leaders (India & global)
+- Elections, parties, history
+- Government policies (simple explanation)
+- Current affairs (general level)
+
+Style:
+- Neutral and respectful always
+- Explain simply like teaching a friend
+- Avoid extreme opinions or hate speech
+- If asked for opinion → give a balanced view
+
+Examples:
+User: "who is modi" → "Narendra Modi is the Prime Minister of India since 2014, leader of BJP..."
+User: "best political party" → "No single 'best' party — depends on people's values and priorities 😊"
+User: "tamil nadu politics" → "TN politics mainly involves DMK, AIADMK, and newer parties like TVK..."
+----------------------------------------`;
+
+// 🧠 CONVERSATION MEMORY (per-server-instance, resets on redeploy)
+const chatHistory: { role: string; parts: { text: string }[] }[] = [];
+
+// 🤖 1. ASK GEMINI API (with key rotation + conversation memory)
+async function askGemini(message: string): Promise<string | null> {
+  if (GEMINI_KEYS.length === 0) {
+    console.error('❌ No Gemini API keys configured');
+    return null;
+  }
+
+  // Add user message to history once
+  chatHistory.push({ role: 'user', parts: [{ text: message }] });
+
+  const tone = detectTone(message);
+  const toneHint = `[User tone: ${tone} — respond in a matching emotional tone]\n\n`;
+
+  const body = JSON.stringify({
+    contents: [
+      { role: 'user', parts: [{ text: SYSTEM_PROMPT }] },
+      { role: 'model', parts: [{ text: "Got it! I'm SURYA.AI, ready to help." }] },
+      ...chatHistory.slice(0, -1),
+      { role: 'user', parts: [{ text: toneHint + message }] }
+    ]
+  });
+
+  // Try each key until one works
+  for (let attempt = 0; attempt < GEMINI_KEYS.length; attempt++) {
+    const key = GEMINI_KEYS[(currentKeyIndex + attempt) % GEMINI_KEYS.length];
+    console.log(`🚀 Trying Gemini key ${attempt + 1}/${GEMINI_KEYS.length}...`);
+
+    try {
+      const response = await fetch(geminiUrl(key), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body
+      });
+
+      console.log('📡 Status:', response.status);
+
+      if (response.status === 429) {
+        console.warn(`⚠️ Key ${attempt + 1} quota exceeded, trying next...`);
+        continue; // try next key
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('❌ Gemini error:', response.status, errorData);
+        chatHistory.pop();
+        return null;
+      }
+
+      const data = await response.json();
+      const text = data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join('') || null;
+
+      if (text) {
+        // Advance key index to the one that worked
+        currentKeyIndex = (currentKeyIndex + attempt) % GEMINI_KEYS.length;
+        chatHistory.push({ role: 'model', parts: [{ text }] });
+        if (chatHistory.length > 10) chatHistory.splice(0, 2);
+        console.log('✅ GEMINI:', text.substring(0, 100));
+        return text.trim();
+      }
+
+      chatHistory.pop();
+      return null;
+    } catch (error) {
+      console.error(`💥 Key ${attempt + 1} error:`, error);
+      continue;
+    }
+  }
+
+  // All keys exhausted
+  chatHistory.pop();
+  console.error('❌ All Gemini keys quota exceeded');
+  return "⚠️ All AI slots are busy right now 😅 Try again in a few minutes!";
+}
+
+// ✅ 2. VALIDATE AI RESPONSE — only reject truly empty/null responses
+function isValidAIResponse(response: string | null): boolean {
+  if (!response) return false;
+  if (response.length < 5) return false;
+  return true;
+}
+
+// 🔄 3. FALLBACK RESPONSE ENGINE
+const greetings = [
+  "Hey 👋\n\nI'm SURYA.AI — I can help you explore Surya's skills, projects, and experience.\n\nWhat do you want to know?",
+  "Hi there! 👋\n\nI'm SURYA.AI, your guide to Surya's portfolio.\n\nAsk me about his skills, projects, or experience!",
+  "Hello! 😊\n\nI'm SURYA.AI. I can tell you all about Surya's work, skills, and projects.\n\nWhat would you like to know?",
+];
+
+const skillResponses = [
+  (skill: string) => `✅ Yes, Surya knows ${skill}! He has used it in real-world projects.`,
+  (skill: string) => `👍 Surya is experienced in ${skill} and uses it in full-stack development.`,
+  (skill: string) => `💡 Yes! ${skill} is one of Surya's core skills.`,
+];
+
+function randomResponse(arr: any[], ...args: any[]): string {
+  const fn = arr[Math.floor(Math.random() * arr.length)];
+  return typeof fn === 'function' ? fn(...args) : fn;
+}
+
+function getFallbackResponse(message: string): string {
+  const normalized = normalize(message);
+  const intent = matchIntent(normalized);
+  
+  console.log('🔄 FALLBACK - Intent:', intent);
+  
+  // GREETING
+  if (intent === 'greeting') {
+    return randomResponse(greetings);
+  }
+  
+  // HOW ARE YOU
+  if (intent === 'how_are_you') {
+    return "I'm doing great 😄\n\nReady to tell you all about Surya's amazing work!\n\nWhat would you like to know?";
+  }
+  
+  // USER FINE
+  if (intent === 'user_fine') {
+    return "That's great! 😊\n\nWhat would you like to know about Surya?\n\n• Skills & Technologies\n• Projects & Live Demos\n• Experience & Education\n• Contact & Social Links";
+  }
+  
+  // THANKS
+  if (intent === 'thanks') {
+    return "Thank you! 😊\n\nGlad I could help!\n\nAnything else you'd like to know about Surya?";
+  }
+  
+  // ALL PROJECT LINKS
+  if (intent === 'all_project_links') {
+    return getAllProjectLinks();
+  }
+  
+  // GITHUB REPOS
+  if (intent === 'github_repos' || intent === 'github') {
+    return getAllGithubRepos();
+  }
+  
+  // SOCIAL LINKS
+  if (intent === 'social_links') {
+    return getAllSocialLinks();
+  }
+  
+  // PHONE NUMBER
+  if (intent === 'phone_number') {
+    return `📱 Surya's Phone Number:\n\n${knowledge.personal.phone}\n\nYou can also reach him via:\n📧 Email: ${knowledge.personal.email}\n💬 WhatsApp: ${knowledge.socialLinks.whatsapp}\n\n👉 Want to know more about his work?`;
+  }
+  
+  // WHATSAPP
+  if (intent === 'whatsapp') {
+    return `💬 Surya's WhatsApp:\n\n${knowledge.socialLinks.whatsapp}\n\nYou can message him directly for quick communication!\n\n👉 Want to know about his projects or skills?`;
+  }
+  
+  // LINKEDIN
+  if (intent === 'linkedin') {
+    return `💼 Surya's LinkedIn:\n\n${knowledge.socialLinks.linkedin}\n\nConnect with him to see his professional journey!\n\n👉 Want to explore his projects or skills?`;
+  }
+  
+  // INSTAGRAM
+  if (intent === 'instagram') {
+    return `📸 Surya's Instagram:\n\n${knowledge.socialLinks.instagram}\n\nFollow him to see his work and updates!\n\n👉 Want to know about his projects or skills?`;
+  }
+  
+  // SKILL QUERY
+  if (intent === 'skill_query') {
+    const skill = extractSkill(normalized);
+    
+    if (skill) {
+      const projects = getSkillsByTech(skill);
+      let response = randomResponse(skillResponses, skill);
+      
+      if (projects.length > 0) {
+        response += `\n\nHe has used ${skill} in projects like:\n`;
+        projects.slice(0, 3).forEach(proj => {
+          response += `• ${proj}\n`;
+        });
+      }
+      
+      response += `\n👉 Want to see more skills or explore projects?`;
+      return response;
+    }
+    
+    return getAllSkills();
+  }
+  
+  // PROJECT QUERY
+  if (intent === 'project_query') {
+    return getProjectList();
+  }
+  
+  // EXPERIENCE
+  if (intent === 'experience') {
+    return getExperience();
+  }
+  
+  // EDUCATION
+  if (intent === 'education') {
+    return getEducation();
+  }
+  
+  // CONTACT
+  if (intent === 'contact') {
+    return getContact();
+  }
+  
+  // DEFAULT — smart fallback based on topic
+  const msg = normalized;
+  if (msg.includes('movie') || msg.includes('actor') || msg.includes('actress') || msg.includes('film') || msg.includes('cinema')) {
+    return "🎬 Cinema topic ah? Love it 😄\n\nAsk me about any movie, actor, director — Tamil, Telugu, Hindi, Hollywood — I got you!";
+  }
+  if (msg.includes('election') || msg.includes('politics') || msg.includes('party') || msg.includes('government') || msg.includes('minister')) {
+    return "🗳️ Politics is always interesting 😄\n\nAsk me about any leader, party, or election — I'll give you a balanced view!";
+  }
+  if (msg.includes('who') || msg.includes('what') || msg.includes('how') || msg.includes('why') || msg.includes('when')) {
+    return "Hey 😄 good question! I'm here to help — ask me anything about tech, cinema, politics, life, or Surya's work!";
+  }
+  return "Hey 😄 I'm SURYA.AI — ask me anything!\n\n💻 Tech  🎬 Cinema  🗳️ Politics  🌍 General  👨‍💻 Surya's Portfolio\n\nWhat's on your mind?";
+}
+
+// 🚀 4. MAIN RESPONSE FUNCTION (HYBRID SYSTEM)
+async function getResponse(message: string): Promise<string> {
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('🔥 ENTERED getResponse()');
+  console.log('📥 USER INPUT:', message);
+  
+  const normalized = normalize(message);
+  console.log('🔍 NORMALIZED:', normalized);
+  
+  // ⚡ Only skip Gemini for truly empty input
+  const trimmedNormalized = normalized.trim();
+  if (!trimmedNormalized) {
+    return getFallbackResponse(message);
+  }
+
+  // 🌦️ WEATHER — handle before Gemini (no live data)
+  if (normalized.includes('weather')) {
+    const city = normalized.replace(/weather|in|at|of|the/g, '').trim() || 'your city';
+    return `I can't fetch live weather data 🌦️\n\nBut you can check Google Weather or AccuWeather for ${city}.\n\n👉 Anything else I can help with?`;
+  }
+
+  // 💊 HEALTH / MEDICAL — practical human-like answer
+  if (/\b(cold|fever|headache|cough|sick|ill|pain|vomit|nausea)\b/.test(normalized)) {
+    return `Ayyo 😟 take care da!\n\nFor common symptoms:\n• Rest well 🛌\n• Drink warm water ☕\n• Steam inhalation helps 🌫️\n• Paracetamol for fever (basic)\n\n⚠️ If it's severe or 2+ days → please see a doctor.\n\nGet well soon ❤️`;
+  }
+
+  // 😄 CASUAL "like/love" about Surya
+  if (/\b(like|love|hate|enjoy)\b/.test(normalized) && !/surya.*(skill|project|work|tech)/.test(normalized)) {
+    return `Haha 😄 interesting! Surya is mostly focused on his tech work 💻🔥\n\nWant to know about his skills or projects?`;
+  }
+  
+  // 🔥 ALWAYS TRY GEMINI FIRST for all other messages
+  console.log('🤖 TRYING GEMINI API (not a simple greeting)...');
+  console.log('🔥 About to call askGemini()...');
+  
+  const geminiResponse = await askGemini(message);
+  
+  console.log('🔥 askGemini() returned');
+  console.log('🤖 GEMINI RESULT:', geminiResponse ? `"${geminiResponse.substring(0, 100)}..."` : 'NULL ❌');
+  
+  // ✅ Validate response
+  const isValid = isValidAIResponse(geminiResponse);
+  console.log('✅ VALIDATION:', isValid ? 'VALID ✅' : 'INVALID ❌');
+  
+  if (isValid && geminiResponse) {
+    console.log('✅ USING GEMINI RESPONSE');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    return geminiResponse;
+  }
+  
+  // 🔄 Fallback ONLY if Gemini fails
+  console.log('🔄 FALLBACK TRIGGERED (Gemini failed or returned invalid response)');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  return getFallbackResponse(message);
+}
+
+// 📡 API ENDPOINT
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json();
@@ -361,7 +486,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
 
-    const response = generateResponse(message);
+    const response = await getResponse(message);
 
     return NextResponse.json({ response });
   } catch (error) {

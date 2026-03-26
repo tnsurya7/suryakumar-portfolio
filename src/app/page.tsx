@@ -202,9 +202,9 @@ export default function HomePage() {
     <>
       <Sidebar />
       <SuryaAI />
-      <div className="ml-0 lg:ml-24">
+      <div className="w-full">
         {/* Hero Section */}
-        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8">
+        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8 pt-24">
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-20 left-10 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl animate-float" />
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
@@ -212,7 +212,8 @@ export default function HomePage() {
           </div>
 
           <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+            {/* Text Content - Always First */}
+            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="flex flex-col order-1 lg:order-1 text-center sm:text-left items-center sm:items-start">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -225,20 +226,25 @@ export default function HomePage() {
                 </span>
               </motion.div>
 
-              <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+              <motion.h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
                 <span className="block sm:inline text-gray-900 dark:text-white">Hi, I'm </span>
-                <span className="block sm:inline bg-gradient-to-r from-gray-900 via-blue-600 to-blue-500 dark:from-gray-100 dark:via-blue-400 dark:to-blue-300 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">Surya Kumar M</span>
+                <span className="block sm:inline bg-gradient-to-r from-gray-900 via-blue-600 to-blue-500 dark:from-gray-100 dark:via-blue-400 dark:to-blue-300 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">Surya Kumar</span>
               </motion.h1>
 
-              <motion.p className="text-2xl md:text-3xl bg-gradient-to-r from-gray-800 via-blue-600 to-blue-500 dark:from-gray-200 dark:via-blue-400 dark:to-blue-300 bg-clip-text text-transparent mb-4 font-semibold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                Full Stack Developer
+              <motion.p className="text-base sm:text-2xl md:text-3xl bg-gradient-to-r from-gray-800 via-blue-600 to-blue-500 dark:from-gray-200 dark:via-blue-400 dark:to-blue-300 bg-clip-text text-transparent mb-3 sm:mb-4 font-semibold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                Full Stack Developer | Automation Specialist
               </motion.p>
 
-              <motion.p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-                Passionate about building modern web applications with cutting-edge technologies.
+              <motion.p className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 mb-2 sm:mb-4 max-w-xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+                I build high-performance web and mobile applications while designing smart automation systems for businesses.
               </motion.p>
 
-              <motion.div className="flex flex-wrap gap-3 mb-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+              <motion.p className="text-xs sm:text-base text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 max-w-xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
+                Expertise in MERN Stack, CRM Automation, n8n Workflows, Salesforce Systems, SEO, and Digital Marketing.
+              </motion.p>
+
+              {/* Social Icons - Desktop Only */}
+              <motion.div className="hidden sm:flex flex-wrap gap-3 mb-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}>
                 {socialLinks.map((link, index) => {
                   const Icon = iconMap[link.platform.toLowerCase()] || Github;
                   const brandColors: any = {
@@ -258,25 +264,36 @@ export default function HomePage() {
                     </motion.a>
                   );
                 })}
+                
+                {/* Phone Icon */}
+                <motion.a href="tel:+919360004968"
+                  whileHover={{ scale: 1.15, y: -5 }} whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white shadow-lg hover:shadow-2xl transition-all duration-200">
+                  <Phone size={24} />
+                </motion.a>
               </motion.div>
 
-              <motion.div className="flex flex-wrap gap-4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
+              {/* Buttons - Desktop: show here, Mobile: show after image */}
+              <motion.div className="hidden sm:flex flex-row flex-wrap gap-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}>
                 <button onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="group px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
-                  <Briefcase size={20} /> View Projects <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
+                  className="group w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                  <Briefcase size={18} /> <span>Projects</span>
                 </button>
-                <a href="/resume.jpeg" download="Surya_Kumar_M_Resume.jpeg"
-                  className="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2">
-                  <Download size={20} /> Download Resume
+                <a href="/resume.jpeg" download="Surya_Kumar_Resume.jpeg" target="_blank" rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                  <Download size={18} /> <span>Resume</span>
                 </a>
                 <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-8 py-4 border-2 border-primary-500 text-primary-600 dark:text-primary-400 rounded-2xl font-semibold hover:bg-primary-500 hover:text-white transition-all flex items-center gap-2">
-                  <Mail size={20} /> Contact Me
+                  className="w-full sm:w-auto px-6 py-3 border-2 border-primary-500 text-primary-600 dark:text-primary-400 rounded-xl text-sm font-semibold hover:bg-primary-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                  <Mail size={18} /> <span>Contact Me</span>
                 </button>
               </motion.div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative">
+            {/* Hero Image - Second on Mobile, Second on Desktop */}
+            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative order-2 lg:order-2">
               <div className="relative w-full aspect-square max-w-lg mx-auto">
                 <motion.div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-600 to-blue-500 rounded-full blur-3xl opacity-50"
                   animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }} transition={{ duration: 10, repeat: Infinity, ease: "linear" }} />
@@ -291,6 +308,22 @@ export default function HomePage() {
                   />
                 </motion.div>
               </div>
+            </motion.div>
+
+            {/* Buttons - Mobile Only: Show after image */}
+            <motion.div className="flex sm:hidden flex-col gap-3 order-3 lg:order-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}>
+              <button onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group w-full px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                <Briefcase size={18} /> <span>Projects</span>
+              </button>
+              <a href="/resume.jpeg" download="Surya_Kumar_Resume.jpeg"
+                className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                <Download size={18} /> <span>Resume</span>
+              </a>
+              <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="w-full px-6 py-3 border-2 border-primary-500 text-primary-600 dark:text-primary-400 rounded-xl text-sm font-semibold hover:bg-primary-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                <Mail size={18} /> <span>Contact Me</span>
+              </button>
             </motion.div>
           </div>
         </section>
@@ -324,7 +357,7 @@ export default function HomePage() {
               <div className="grid gap-6">
                 {education.map((edu, index) => (
                   <motion.div key={edu.id} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} whileHover={{ scale: 1.02, y: -5 }}
-                    className="relative p-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-lg hover:shadow-2xl transition-all border-2 border-secondary-200 dark:border-secondary-800 overflow-hidden group">
+                    className="relative p-4 sm:p-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-lg hover:shadow-2xl transition-all border-2 border-secondary-200 dark:border-secondary-800 overflow-hidden group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary-500/20 to-accent-500/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500" />
                     
                     {/* KSR Logo Watermark */}
@@ -339,12 +372,12 @@ export default function HomePage() {
                     </div>
                     
                     <div className="relative">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1 flex items-start gap-4">
+                      <div className="flex flex-col sm:flex-row items-start sm:justify-between gap-3 mb-4">
+                        <div className="flex-1 flex items-start gap-3 sm:gap-4 w-full">
                           {/* College Logo */}
                           <motion.div 
                             whileHover={{ scale: 1.1, rotate: 5 }}
-                            className="flex-shrink-0 w-20 h-20 rounded-2xl bg-white dark:bg-gray-900 p-2 shadow-lg border-2 border-blue-200 dark:border-blue-800"
+                            className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white dark:bg-gray-900 p-2 shadow-lg border-2 border-blue-200 dark:border-blue-800"
                           >
                             <Image
                               src="/ksr-logo.png"
@@ -355,12 +388,12 @@ export default function HomePage() {
                             />
                           </motion.div>
                           
-                          <div className="flex-1">
-                            <h4 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">{edu.degree}</h4>
-                            <p className="text-lg font-semibold mt-2 text-gray-800 dark:text-gray-200">{edu.institution}</p>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">{edu.degree}</h4>
+                            <p className="text-base sm:text-lg font-semibold mt-2 text-gray-800 dark:text-gray-200">{edu.institution}</p>
                           </div>
                         </div>
-                        <div className="px-4 py-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white rounded-full text-sm font-bold shadow-lg animate-pulse">
+                        <div className="px-4 py-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white rounded-full text-sm font-bold shadow-lg animate-pulse flex-shrink-0">
                           {edu.current ? 'Current' : 'Completed'}
                         </div>
                       </div>
@@ -427,12 +460,12 @@ export default function HomePage() {
                         </div>
                         
                         <div className="relative">
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="flex-1 flex items-start gap-4">
+                          <div className="flex flex-col sm:flex-row items-start sm:justify-between gap-3 mb-4">
+                            <div className="flex-1 flex items-start gap-3 sm:gap-4 w-full">
                               {/* Company Logo */}
                               <motion.div 
                                 whileHover={{ scale: 1.1, rotate: 5 }}
-                                className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white dark:bg-gray-900 p-2 shadow-lg border-2 border-purple-200 dark:border-purple-800"
+                                className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-gray-900 p-2 shadow-lg border-2 border-purple-200 dark:border-purple-800"
                               >
                                 <Image
                                   src={`/${color.logo}`}
@@ -443,13 +476,13 @@ export default function HomePage() {
                                 />
                               </motion.div>
                               
-                              <div className="flex-1">
-                                <h4 className="text-2xl font-bold bg-gradient-to-r from-accent-600 to-primary-600 dark:from-accent-400 dark:to-primary-400 bg-clip-text text-transparent">{intern.position}</h4>
-                                <p className="text-lg font-semibold mt-2 text-gray-800 dark:text-gray-200">{intern.company}</p>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-accent-600 to-primary-600 dark:from-accent-400 dark:to-primary-400 bg-clip-text text-transparent">{intern.position}</h4>
+                                <p className="text-base sm:text-lg font-semibold mt-2 text-gray-800 dark:text-gray-200">{intern.company}</p>
                               </div>
                             </div>
                             {intern.current && (
-                              <div className={`px-4 py-2 ${color.status} text-white rounded-full text-sm font-bold shadow-lg animate-pulse`}>
+                              <div className={`px-4 py-2 ${color.status} text-white rounded-full text-sm font-bold shadow-lg animate-pulse flex-shrink-0`}>
                                 Current
                               </div>
                             )}
@@ -733,28 +766,28 @@ export default function HomePage() {
                 <div className="space-y-6">
                   <motion.div whileHover={{ x: 10, scale: 1.02 }} className="relative flex items-center gap-4 p-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transition-all border-2 border-red-200 dark:border-red-800 overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative p-4 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl shadow-lg"><Mail className="text-white" size={28} /></div>
-                    <div className="relative">
+                    <div className="relative p-4 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl shadow-lg flex-shrink-0"><Mail className="text-white" size={28} /></div>
+                    <div className="relative flex-1 min-w-0">
                       <p className="text-sm text-gray-500 dark:text-gray-400 font-semibold">Email</p>
-                      <a href="mailto:suryakumar56394@gmail.com" className="text-lg font-bold bg-gradient-to-r from-red-600 to-pink-600 dark:from-red-400 dark:to-pink-400 bg-clip-text text-transparent hover:from-red-700 hover:to-pink-700 transition-all">suryakumar56394@gmail.com</a>
+                      <a href="mailto:suryakumar56394@gmail.com" className="text-base sm:text-lg font-bold bg-gradient-to-r from-red-600 to-pink-600 dark:from-red-400 dark:to-pink-400 bg-clip-text text-transparent hover:from-red-700 hover:to-pink-700 transition-all break-all">suryakumar56394@gmail.com</a>
                     </div>
                   </motion.div>
 
                   <motion.div whileHover={{ x: 10, scale: 1.02 }} className="relative flex items-center gap-4 p-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transition-all border-2 border-blue-200 dark:border-blue-800 overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative p-4 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-lg"><Phone className="text-white" size={28} /></div>
-                    <div className="relative">
+                    <div className="relative p-4 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-lg flex-shrink-0"><Phone className="text-white" size={28} /></div>
+                    <div className="relative flex-1 min-w-0">
                       <p className="text-sm text-gray-500 dark:text-gray-400 font-semibold">Phone</p>
-                      <a href="tel:+919360004968" className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent hover:from-blue-700 hover:to-cyan-700 transition-all">+91 9360004968</a>
+                      <a href="tel:+919360004968" className="text-base sm:text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent hover:from-blue-700 hover:to-cyan-700 transition-all">+91 9360004968</a>
                     </div>
                   </motion.div>
 
                   <motion.div whileHover={{ x: 10, scale: 1.02 }} className="relative flex items-center gap-4 p-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transition-all border-2 border-green-200 dark:border-green-800 overflow-hidden group">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative p-4 bg-[#25D366] rounded-2xl shadow-lg"><MessageCircle className="text-white" size={28} /></div>
-                    <div className="relative">
+                    <div className="relative p-4 bg-[#25D366] rounded-2xl shadow-lg flex-shrink-0"><MessageCircle className="text-white" size={28} /></div>
+                    <div className="relative flex-1 min-w-0">
                       <p className="text-sm text-gray-500 dark:text-gray-400 font-semibold">WhatsApp</p>
-                      <a href="https://wa.me/919360004968" target="_blank" rel="noopener noreferrer" className="text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent hover:from-green-700 hover:to-emerald-700 transition-all">Chat on WhatsApp</a>
+                      <a href="https://wa.me/919360004968" target="_blank" rel="noopener noreferrer" className="text-base sm:text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent hover:from-green-700 hover:to-emerald-700 transition-all">Chat on WhatsApp</a>
                     </div>
                   </motion.div>
                 </div>

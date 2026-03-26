@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -8,19 +8,21 @@ import Analytics from "@/components/Analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: "Surya Kumar M - Full Stack Developer | React, Node.js, AI/ML",
   description: "Portfolio of Surya Kumar M, a passionate Full Stack Developer specializing in React.js, Node.js, Python, AI/ML, and modern web technologies. Building innovative solutions with cutting-edge tech.",
   keywords: ["Full Stack Developer", "React Developer", "Node.js", "Python", "AI/ML", "Web Development", "Surya Kumar M", "Portfolio", "JavaScript", "TypeScript", "MongoDB", "MySQL"],
   authors: [{ name: "Surya Kumar M" }],
   creator: "Surya Kumar M",
   publisher: "Surya Kumar M",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   robots: {
     index: true,
     follow: true,
