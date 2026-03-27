@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import AnimatedCursor from "@/components/AnimatedCursor";
 import { Toaster } from "react-hot-toast";
 import Analytics from "@/components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -80,6 +81,7 @@ export default function RootLayout({
             {children}
           </main>
           <Toaster position="top-right" />
+          <VercelAnalytics />
         </ThemeProvider>
       </body>
     </html>
