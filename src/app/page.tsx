@@ -558,6 +558,111 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* Achievements Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          >
+            <div className="flex items-center gap-4 mb-8">
+              <div className="p-4 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-2xl text-white shadow-lg">
+                <span className="text-2xl">🏆</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 dark:from-amber-400 dark:via-orange-400 dark:to-red-400 bg-clip-text text-transparent">
+                Achievements & Expertise
+              </h3>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Tech Achievements */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-amber-200 dark:border-amber-800"
+              >
+                <h4 className="text-lg font-bold mb-4 flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                  🚀 Technical Achievements
+                </h4>
+                <ul className="space-y-3">
+                  {[
+                    { icon: '💻', text: 'Developed 13+ web applications and 1 mobile application' },
+                    { icon: '⚡', text: 'Delivered 20+ SEO-optimized, high-performance websites with lazy loading' },
+                    { icon: '📈', text: 'Achieved Google ranking for 5+ websites through advanced SEO strategies' },
+                    { icon: '📊', text: 'Implemented Google Analytics & Search Console for performance tracking' },
+                    { icon: '📍', text: 'Completed Google Business verification and local SEO optimization' },
+                    { icon: '🤖', text: 'Built CRM automation systems using n8n, BotBee, and Salesforce' },
+                    { icon: '💬', text: 'Developed WhatsApp automation with Meta template verification' },
+                    { icon: '🎯', text: 'Designed lead generation, tracking, and recommendation systems' },
+                  ].map((item, i) => (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.07 }}
+                      className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300"
+                    >
+                      <span className="text-base flex-shrink-0 mt-0.5">{item.icon}</span>
+                      <span>{item.text}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Creative Achievements */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-purple-200 dark:border-purple-800"
+              >
+                <h4 className="text-lg font-bold mb-4 flex items-center gap-2 text-purple-600 dark:text-purple-400">
+                  🎬 Creative Excellence
+                </h4>
+                <div className="space-y-4">
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 rounded-2xl border border-yellow-200 dark:border-yellow-700"
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-3xl">🥇</span>
+                      <div>
+                        <p className="font-bold text-gray-900 dark:text-white">1st Prize</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Short Film Competition</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { icon: '🎥', label: 'Best Direction' },
+                        { icon: '✍️', label: 'Storytelling' },
+                        { icon: '🧠', label: 'Screenplay' },
+                        { icon: '✂️', label: 'Editing' },
+                      ].map((badge, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: i * 0.1 }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 text-purple-700 dark:text-purple-300 rounded-full text-xs font-semibold border border-purple-200 dark:border-purple-700"
+                        >
+                          {badge.icon} {badge.label}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed px-1">
+                    Beyond code, Surya brings creative vision to storytelling — combining technical precision with artistic direction to craft compelling narratives.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
           <GitHubStats username="tnsurya7" />
         </section>
 
