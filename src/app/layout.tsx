@@ -6,6 +6,7 @@ import AnimatedCursor from "@/components/AnimatedCursor";
 import { Toaster } from "react-hot-toast";
 import Analytics from "@/components/Analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -82,6 +83,7 @@ export default function RootLayout({
           </main>
           <Toaster position="top-right" />
           <VercelAnalytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

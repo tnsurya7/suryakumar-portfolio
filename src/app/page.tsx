@@ -13,6 +13,7 @@ import { track } from '@vercel/analytics';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import SuryaAI from '@/components/SuryaAI';
+import GitHubStats from '@/components/GitHubStats';
 import portfolioData from '@/data/portfolio.json';
 
 export default function HomePage() {
@@ -551,6 +552,7 @@ export default function HomePage() {
               </div>
             )}
           </div>
+          <GitHubStats username="tnsurya7" />
         </section>
 
         {/* Skills Section */}
@@ -863,6 +865,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => track('project_click', { project: selectedProject.title, url: selectedProject.liveUrl })}
                     className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:shadow-lg hover:shadow-green-500/50 transition-all font-semibold"
                   >
                     <ExternalLink size={20} /> Live Demo
