@@ -99,6 +99,7 @@ export default function HomePage() {
           }
         );
         setFormData({ name: '', email: '', message: '' });
+        track('contact_form_submit', { success: true });
       } else {
         toast.error(
           (t) => (
@@ -244,6 +245,7 @@ export default function HomePage() {
                       whileHover={{ scale: 1.15, y: -5 }} whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2 }}
                       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                      onClick={() => track('social_link_click', { platform: link.platform, url: link.url })}
                       className={`p-4 rounded-2xl ${brandColors[link.platform.toLowerCase()]} text-white shadow-lg hover:shadow-2xl transition-all duration-200`}>
                       <Icon size={24} />
                     </motion.a>
@@ -354,6 +356,7 @@ export default function HomePage() {
                         alt="KSR College Logo"
                         width={96}
                         height={96}
+                        loading="lazy"
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -371,6 +374,7 @@ export default function HomePage() {
                               alt="KSR College Logo"
                               width={80}
                               height={80}
+                              loading="lazy"
                               className="w-full h-full object-contain"
                             />
                           </motion.div>
@@ -442,6 +446,7 @@ export default function HomePage() {
                             alt={`${intern.company} Logo`}
                             width={80}
                             height={80}
+                            loading="lazy"
                             className="w-full h-full object-contain"
                           />
                         </div>
@@ -459,6 +464,7 @@ export default function HomePage() {
                                   alt={`${intern.company} Logo`}
                                   width={64}
                                   height={64}
+                                  loading="lazy"
                                   className="w-full h-full object-contain"
                                 />
                               </motion.div>
@@ -700,6 +706,8 @@ export default function HomePage() {
                             src={project.image}
                             alt={project.title}
                             fill
+                            loading="lazy"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover"
                           />
                           <motion.div 
