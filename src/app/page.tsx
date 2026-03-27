@@ -6,7 +6,9 @@ import Image from 'next/image';
 import { 
   Github, Linkedin, Instagram, Facebook, MessageCircle, 
   Mail, Phone, ExternalLink, Download, Award, Briefcase,
-  GraduationCap, Send, Sparkles, X, Code
+  GraduationCap, Send, Sparkles, X, Code,
+  Monitor, Zap, TrendingUp, BarChart2, MapPin, Bot, MessageSquare, Target,
+  Video, BookOpen, FileText, Scissors, Film, Clock, Calendar, Lightbulb, Play
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { track } from '@vercel/analytics';
@@ -588,14 +590,14 @@ export default function HomePage() {
                 </h4>
                 <ul className="space-y-3">
                   {[
-                    { icon: '💻', text: 'Developed 13+ web applications and 1 mobile application' },
-                    { icon: '⚡', text: 'Delivered 20+ SEO-optimized, high-performance websites with lazy loading' },
-                    { icon: '📈', text: 'Achieved Google ranking for 5+ websites through advanced SEO strategies' },
-                    { icon: '📊', text: 'Implemented Google Analytics & Search Console for performance tracking' },
-                    { icon: '📍', text: 'Completed Google Business verification and local SEO optimization' },
-                    { icon: '🤖', text: 'Built CRM automation systems using n8n, BotBee, and Salesforce' },
-                    { icon: '💬', text: 'Developed WhatsApp automation with Meta template verification' },
-                    { icon: '🎯', text: 'Designed lead generation, tracking, and recommendation systems' },
+                    { icon: Monitor, text: 'Developed 13+ web applications and 1 mobile application', color: 'text-blue-500' },
+                    { icon: Zap, text: 'Delivered 20+ SEO-optimized, high-performance websites with lazy loading', color: 'text-yellow-500' },
+                    { icon: TrendingUp, text: 'Achieved Google ranking for 5+ websites through advanced SEO strategies', color: 'text-green-500' },
+                    { icon: BarChart2, text: 'Implemented Google Analytics & Search Console for performance tracking', color: 'text-purple-500' },
+                    { icon: MapPin, text: 'Completed Google Business verification and local SEO optimization', color: 'text-red-500' },
+                    { icon: Bot, text: 'Built CRM automation systems using n8n, BotBee, and Salesforce', color: 'text-cyan-500' },
+                    { icon: MessageSquare, text: 'Developed WhatsApp automation with Meta template verification', color: 'text-emerald-500' },
+                    { icon: Target, text: 'Designed lead generation, tracking, and recommendation systems', color: 'text-orange-500' },
                   ].map((item, i) => (
                     <motion.li
                       key={i}
@@ -605,7 +607,7 @@ export default function HomePage() {
                       transition={{ delay: i * 0.07 }}
                       className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300"
                     >
-                      <span className="text-base flex-shrink-0 mt-0.5">{item.icon}</span>
+                      <item.icon size={17} className={`${item.color} flex-shrink-0 mt-0.5`} />
                       <span>{item.text}</span>
                     </motion.li>
                   ))}
@@ -634,12 +636,36 @@ export default function HomePage() {
                         <p className="text-sm text-gray-600 dark:text-gray-400">Short Film Competition</p>
                       </div>
                     </div>
+                    {/* Film details */}
+                    <div className="mb-3 pl-1 space-y-1.5">
+                      {[
+                        { icon: Film, label: 'Short Film', value: '"Triple R"', color: 'text-purple-500' },
+                        { icon: Clock, label: 'Duration', value: '6 min 3 sec', color: 'text-blue-500' },
+                        { icon: Calendar, label: 'Year', value: '2023', color: 'text-green-500' },
+                        { icon: Lightbulb, label: 'Theme', value: 'Save Electricity', color: 'text-yellow-500' },
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                          <item.icon size={14} className={`${item.color} flex-shrink-0`} />
+                          <span className="text-gray-500 dark:text-gray-400">{item.label}:</span>
+                          <span className="font-semibold">{item.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Watch button */}
+                    <a
+                      href="https://youtu.be/QSJHjPaK_ac"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 mb-3 px-4 py-2 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl text-xs font-semibold shadow-md hover:shadow-lg hover:from-red-600 hover:to-rose-700 transition-all"
+                    >
+                      <Play size={13} fill="white" /> Watch Film
+                    </a>
                     <div className="flex flex-wrap gap-2">
                       {[
-                        { icon: '🎥', label: 'Best Direction' },
-                        { icon: '✍️', label: 'Storytelling' },
-                        { icon: '🧠', label: 'Screenplay' },
-                        { icon: '✂️', label: 'Editing' },
+                        { icon: Video, label: 'Direction', color: 'text-purple-600 dark:text-purple-400' },
+                        { icon: BookOpen, label: 'Storytelling', color: 'text-pink-600 dark:text-pink-400' },
+                        { icon: FileText, label: 'Screenplay', color: 'text-indigo-600 dark:text-indigo-400' },
+                        { icon: Scissors, label: 'Editing', color: 'text-rose-600 dark:text-rose-400' },
                       ].map((badge, i) => (
                         <motion.span
                           key={i}
@@ -649,7 +675,7 @@ export default function HomePage() {
                           transition={{ delay: i * 0.1 }}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 text-purple-700 dark:text-purple-300 rounded-full text-xs font-semibold border border-purple-200 dark:border-purple-700"
                         >
-                          {badge.icon} {badge.label}
+                          <badge.icon size={13} className={badge.color} /> {badge.label}
                         </motion.span>
                       ))}
                     </div>
