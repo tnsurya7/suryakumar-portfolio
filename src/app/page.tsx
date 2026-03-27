@@ -9,6 +9,7 @@ import {
   GraduationCap, Send, Sparkles, X, Code
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { track } from '@vercel/analytics';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import SuryaAI from '@/components/SuryaAI';
@@ -265,6 +266,7 @@ export default function HomePage() {
                   <Briefcase size={18} /> <span>Projects</span>
                 </button>
                 <a href="/resume.jpeg" download="Surya_Kumar_Resume.jpeg" target="_blank" rel="noopener noreferrer"
+                  onClick={() => track('resume_download', { location: 'hero_desktop' })}
                   className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
                   <Download size={18} /> <span>Resume</span>
                 </a>
@@ -300,6 +302,7 @@ export default function HomePage() {
                 <Briefcase size={18} /> <span>Projects</span>
               </button>
               <a href="/resume.jpeg" download="Surya_Kumar_Resume.jpeg"
+                onClick={() => track('resume_download', { location: 'hero_mobile' })}
                 className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
                 <Download size={18} /> <span>Resume</span>
               </a>
